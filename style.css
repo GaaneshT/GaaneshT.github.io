@@ -1,10 +1,14 @@
-/* FILEPATH: /Users/gaanesh/Documents/GitHub/GaaneshT.github.io/style.css */
+/* Reset styles for consistent rendering */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 /* Global styles */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    background-color: #f5f5f5; /* Add a light background color for readability */
 }
 
 /* Header styles */
@@ -31,6 +35,7 @@ nav li {
 nav a {
     color: #fff;
     text-decoration: none;
+    font-weight: bold; /* Make navigation links bold for emphasis */
 }
 
 /* Main styles */
@@ -38,6 +43,9 @@ main {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
+    background-color: #fff; /* Add a white background to the main content area */
+    border-radius: 4px; /* Rounded corners for the content */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -45,6 +53,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
 }
 
+/* Hero section styles */
 #hero {
     background-color: #333;
     color: #fff;
@@ -70,12 +79,15 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 4px;
     text-decoration: none;
     margin-top: 2rem;
+    font-weight: bold; /* Make the call to action button bold for emphasis */
 }
 
+/* About section styles */
 #about {
     margin-top: 4rem;
 }
 
+/* Skills section styles */
 #skills ul {
     list-style: none;
     margin: 0;
@@ -92,6 +104,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-basis: calc(33.33% - 2rem);
 }
 
+/* Experience section styles */
 #experience ul {
     list-style: none;
     margin: 0;
@@ -100,8 +113,10 @@ h1, h2, h3, h4, h5, h6 {
 
 #experience h3 {
     margin-top: 2rem;
+    font-weight: bold; /* Make job titles in experience bold */
 }
 
+/* Education section styles */
 #education ul {
     list-style: none;
     margin: 0;
@@ -110,6 +125,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #education h3 {
     margin-top: 2rem;
+    font-weight: bold; /* Make degree titles in education bold */
 }
 
 /* Footer styles */
@@ -118,4 +134,9 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem;
+}
+
+/* Add hover effect for navigation links */
+nav a:hover {
+    text-decoration: underline; /* Underline links on hover for better user feedback */
 }

@@ -11,32 +11,32 @@ jobs:
     steps:
       # Step 1: Checkout the repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Install Node.js
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: npm
 
       # Step 3: Install Dependencies
       - name: Install dependencies
         run: npm install
 
-      # Step 4: Build SvelteKit site
+      # Step 4: Build SvelteKit Site
       - name: Build site
         env:
-          NODE_ENV: production
           BASE_PATH: '/${{ github.event.repository.name }}'
         run: |
           npm run build
 
-      # Step 6: Upload Build Artifacts
-      - name: Upload build artifacts
-        uses: actions/upload-pages-artifact@v2
+      # Step 5: Upload Build Artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: build/
+          # This should match the `pages` option in your adapter-static options
+          path: 'build/'
 
   deploy:
     needs: build_site
@@ -51,7 +51,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      # Step 7: Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
+      # Step 6: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4

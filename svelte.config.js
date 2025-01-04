@@ -9,10 +9,10 @@ const config = {
             fallback: 'index.html'
         }),
         paths: {
-            base: process.env.NODE_ENV === 'production' ? '/GaaneshT.github.io' : ''
+            base: process.env.BASE_PATH || ''
         },
         prerender: {
-            entries: ['*'] // Ensures all routes are prerendered
+            entries: ['*']
         }
     }
 };

@@ -9,7 +9,7 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"deploy": "npm run build && if not exist docs mkdir docs && xcopy /E /I /Y build\\* docs\\ && git add . && git commit -m \"Deploy to GitHub Pages\" && git push"
+		"deploy": "npm run build && if not exist docs mkdir docs && robocopy build docs /E && git add . && git commit -m \"Deploy to GitHub Pages\" && git push"
 
 	},
 	"devDependencies": {

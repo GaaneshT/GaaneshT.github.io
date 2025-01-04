@@ -1,4 +1,6 @@
 <script>
+    import { base } from '$app/paths';
+
     let name = "Gaanesh Theivasigamani";
     let title = "InfoSec Undergraduate | Security Engineer";
     let summary =
@@ -11,7 +13,7 @@
         I'm always eager to learn new things and share my knowledge with others. 
         Feel free to reach out to me for collaborations or just to chat!
     `;
-    let profileImageUrl = "/Me.jpg";
+    let profileImageUrl = `${base}/Me.jpg`;
 
     let darkMode = false;
     let isNavOpen = false;
@@ -118,7 +120,7 @@
             name: "Lee Jia Quan (Benny)",
             position: "Computer Science undergrad at NUS",
             text: "Working alongside Gaanesh has been a truly inspiring experience. His enthusiasm and curiosity have consistently fueled my own motivation to tackle new and challenging projects. Gaanesh is always eager to engage in meaningful discussions, particularly about trending advancements in cybertech and their implications on our work, which adds depth and relevance to our collaborations.\n\nWhat stands out most about Gaanesh is his unwavering dedication and goal-oriented mindset. When he commits to a project, he ensures that it is not only completed on time but also meets his high personal standards. This level of diligence makes collaborating with him an exceptional experience. His openness to exchanging ideas and his focus on achieving results within the set timeline create a productive and enjoyable working environment.",
-            imageUrl: "/Benny.jpg",
+            imageUrl: `${base}/Benny.jpg`,
             date: "04 Jan 2025",
             relationship: "Worked together in NUS"
         },
@@ -130,7 +132,7 @@ His strong communication skills and ability to collaborate effectively with dive
 With a solid academic background and a keen interest in cybersecurity, Gaanesh brings both knowledge and passion to his work. \
 His problem-solving skills are remarkable, as he is quick to suggest alternative solutions when plans don't unfold as expected, \
 ensuring progress and success in challenging situations.",
-            imageUrl: "/GQ.jpg",
+            imageUrl: `${base}/GQ.jpg`,
             date: "04 Jan 2025",
             relationship: "Worked together in NUS"
         }

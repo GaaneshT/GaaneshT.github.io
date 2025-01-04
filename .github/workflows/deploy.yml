@@ -32,10 +32,6 @@ jobs:
         run: |
           npm run build
 
-      # Step 5: Add .nojekyll (Disable Jekyll Processing)
-      - name: Disable Jekyll
-        run: touch build/.nojekyll
-
       # Step 6: Upload Build Artifacts
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v2

@@ -15,12 +15,9 @@
     `;
     let profileImageUrl = `${base}/Me.jpg`;
 
-    let darkMode = false;
-    let isNavOpen = false;
+    let darkMode = true;
 
-    function toggleNav() {
-        isNavOpen = !isNavOpen;
-    }
+
 
     // Toggle Dark Mode
     function toggleDarkMode() {
@@ -39,7 +36,7 @@
     let experience = [
     {
         company: "National University of Singapore (NUS)",
-        role: "Ethical Hacker - NUS Vulnerability Disclosure Programme",
+        role: "Vulnerability Researcher - NUS Vulnerability Disclosure Programme",
         duration: "Jul 2024 - Present",
         description: [
             "Conducted in-depth penetration testing on various NUS infrastructures, identifying and reporting security vulnerabilities.",
@@ -49,10 +46,9 @@
     },
     {
         company: "National University of Singapore (NUS)",
-        role: "Undergraduate Teaching Assistant",
-        duration: "Aug 2024 - Present",
+        role: "Undergraduate Teaching Assistant - CS2107 Introduction to Information Security",
+        duration: "Aug 2024 - Dec 2024",
         description: [
-            "Guided students in CS2107 Introduction to Information Security, providing mentorship on complex security concepts.",
             "Designed and developed hands-on challenges in cryptography, web security, digital forensics, and reverse engineering.",
             "Enhanced student engagement and learning outcomes through interactive sessions."
         ],
@@ -66,6 +62,16 @@
             "Configured and deployed an ELK stack for data analysis and visualization.",
             "Utilized Burp Suite for in-depth API analysis, identifying hidden functionalities and vulnerabilities."
         ],
+    },
+    {
+        company: "Cyber Security Agency of Singapore (CSA)",
+        role: "Cyber Security Specialist",
+        duration: "Aug 2021 - Aug 2023",
+        description: [
+            "Acquiring Forensic Evidence: I work with victim entities to acquire forensic evidence, including system artifacts and system logs, that can be used to determine the root cause of a cyber incident.",
+            "Digital Forensics Analysis: Utilizing various forensic tools and techniques, I examine the digital evidence obtained from victim entities to determine the underlying cause of a cyber attack. This involves scrutinizing system artifacts like files, network activity logs, system logs, and memory captures.",
+            "Liaising with CIIs and Victims: I act as a liaison between Critical Information Infrastructure providers (CIIs) and victim entities, communicating information about the incident and facilitating a coordinated response to aid in mitigationSpecialising"
+        ],
     }
 ];
 
@@ -78,7 +84,7 @@
         },
         {
             institution: "Singapore Polytechnic",
-            degree: "Diploma in Aerospace Electronics & Diploma+ in Aviation Management",
+            degree: "Diploma in Aerospace Electronics && Diploma+ in Aviation Management",
             duration: "2017 - 2020",
         },
     ];
@@ -94,7 +100,7 @@
             name: "IR Dojo - CTF Training For Everyone",
             duration: "Dec 2021 - Mar 2022",
             description:
-                "Led the creation of a CTF focusing on Digital Forensics and Malware Analysis. Won the MCI Idea! Award.",
+                "Created a CTF focusing on Digital Forensics and Malware Analysis. Won the MCI Idea! Award.",
         },
         {
             name: "BuildOn Singapore Hackathon",
@@ -143,8 +149,8 @@ ensuring progress and success in challenging situations.",
 <nav class="top-nav">
     <a href="#AboutMe">About Me</a>
     <a href="#experience">Experience</a>
-    <a href="#education">Education</a>
     <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
     <a href="#certifications">Certifications</a>
     <a href="#skills">Skills</a>
     <a href="#testimonials">Testimonials</a>
@@ -187,7 +193,6 @@ ensuring progress and success in challenging situations.",
         <button class="theme-toggle" on:click={toggleDarkMode}>
             {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
         </button>
-        <a href="#projects" class="cta-button">View My Projects</a>
     </header>
 
     <div class="section" id="AboutMe">
@@ -211,6 +216,17 @@ ensuring progress and success in challenging situations.",
             </div>
         {/each}
     </div>
+        <!-- Projects Section -->
+        <div class="section" id="projects">
+            <h2>Projects</h2>
+            {#each projects as project}
+                <div class="projects card">
+                    <h3>{project.name}</h3>
+                    <p><em>{project.duration}</em></p>
+                    <p>{project.description}</p>
+                </div>
+            {/each}
+        </div>
     
 
     <!-- Education Section -->
@@ -245,17 +261,6 @@ ensuring progress and success in challenging situations.",
         </ul>
     </div>
 
-    <!-- Projects Section -->
-    <div class="section" id="projects">
-        <h2>Projects</h2>
-        {#each projects as project}
-            <div class="projects card">
-                <h3>{project.name}</h3>
-                <p><em>{project.duration}</em></p>
-                <p>{project.description}</p>
-            </div>
-        {/each}
-    </div>
 
 <!-- Testimonials Section -->
 <div class="section" id="testimonials">

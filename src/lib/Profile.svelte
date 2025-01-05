@@ -1,5 +1,6 @@
 <script>
     import { base } from '$app/paths';
+    import { onMount } from 'svelte';
 
     let name = "Gaanesh Theivasigamani";
     let title = "InfoSec Undergraduate | Security Engineer";
@@ -16,6 +17,9 @@
     let profileImageUrl = `${base}/Me.jpg`;
 
     let darkMode = true;
+
+    let isNavActive = false;
+
 
 
 
@@ -147,14 +151,25 @@ ensuring progress and success in challenging situations.",
 
 <!--  NavBar -->
 <nav class="top-nav">
-    <a href="#AboutMe">About Me</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Projects</a>
-    <a href="#education">Education</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#skills">Skills</a>
-    <a href="#testimonials">Testimonials</a>
+    <button
+        class="menu-toggle"
+        aria-label="Toggle Menu"
+        aria-expanded="{isNavActive}"
+        on:click={() => isNavActive = !isNavActive}
+    >
+        ☰
+    </button>
+    <div class="nav-links" class:active={isNavActive}>
+        <a href="#AboutMe" on:click={() => isNavActive = false}>About Me</a>
+        <a href="#experience" on:click={() => isNavActive = false}>Experience</a>
+        <a href="#projects" on:click={() => isNavActive = false}>Projects</a>
+        <a href="#education" on:click={() => isNavActive = false}>Education</a>
+        <a href="#certifications" on:click={() => isNavActive = false}>Certifications</a>
+        <a href="#skills" on:click={() => isNavActive = false}>Skills</a>
+        <a href="#testimonials" on:click={() => isNavActive = false}>Testimonials</a>
+    </div>
 </nav>
+
 
 <!--  Main Content Container -->
 <div class="container">
@@ -416,22 +431,34 @@ ensuring progress and success in challenging situations.",
 
     header h2 {
         font-size: 1.5em;
-        color: var(--accent-color);
+        background: linear-gradient(90deg, #011d06, #ff7e5f); /* Gradient color */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 15px;
         animation: fadeInUp 1s ease-out;
         animation-delay: 0.6s;
         animation-fill-mode: both;
     }
 
-    /* Tagline */
-    /* 🌟 Gradient Text for Summary */
+    :global(body.dark) header h2{
+
+        background: linear-gradient(90deg, #07ad26, #ff7e5f); /* Dark mode Gradient color */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+    }
+
+
+    /*  Gradient Text for Summary */
     header p {
         font-size: 1.1em;
         max-width: 600px;
         margin: 0 auto 20px auto;
         text-align: center;
-        font-weight: 700; /* Ensure the font is bold */
-        background: linear-gradient(90deg, #00bfa5, #b388ff);
+        font-weight: 700; 
+        background: linear-gradient(90deg, #4C4B63, #6A11CB, #3F0D12);
+
+
 
         background-clip: text;
         -webkit-background-clip: text;
@@ -440,14 +467,13 @@ ensuring progress and success in challenging situations.",
         animation-delay: 0.7s;
         animation-fill-mode: both;
     }
-    body.dark header p,
-    body.dark .section h2 {
-        background: linear-gradient(
-            90deg,
-            #6a11cb,
-            #a3eaff
-        ); /* Subtle adjustment for dark mode */
-    }
+    :global(body.dark) header p {
+    background: linear-gradient(90deg, #64dab2, #735dc2, #9954b4);      /*  Change dark mode color gradient */
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 
     /* Social Media Links Styling */
     .social-media {
@@ -699,6 +725,15 @@ ensuring progress and success in challenging situations.",
     .top-nav a:hover {
         color: #6aa9e9;
     }
+    /* Mobile Menu Button */
+    .menu-toggle {
+        display: none;
+        font-size: 1.5em;
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        cursor: pointer;
+    }
 
     /*  Testimonials Section Styling */
     .testimonial.card {
@@ -756,61 +791,128 @@ ensuring progress and success in challenging situations.",
 
     /*  Mobile Responsiveness */
     @media (max-width: 600px) {
-        .testimonial-photo {
-            width: 60px;
-            height: 60px;
-        }
 
-        .testimonial-text {
-            font-size: 0.9em;
-        }
-
-        .testimonial-name {
-            font-size: 1em;
-        }
-
-        .testimonial-position {
-            font-size: 0.85em;
-        }
+    .testimonial-photo {
+        width: 60px;
+        height: 60px;
     }
 
-    /*  Mobile Optimization */
-    @media (max-width: 600px) {
-        header {
-            padding: 40px 15px;
-        }
-
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-width: 3px;
-        }
-
-        header h1 {
-            font-size: 2em;
-        }
-
-        header h2 {
-            font-size: 1.2em;
-        }
-
-        header p {
-            font-size: 1em;
-        }
-
-        .theme-toggle {
-            padding: 6px 10px;
-            font-size: 0.9em;
-        }
-
-        .cta-button {
-            padding: 10px 20px;
-            font-size: 0.9em;
-        }
-
-        .top-nav a {
-            margin: 0 10px;
-            font-size: 0.9em;
-        }
+    .testimonial-text {
+        font-size: 0.9em;
     }
+
+    .testimonial-name {
+        font-size: 1em;
+    }
+
+    .testimonial-position {
+        font-size: 0.85em;
+    }
+
+    /*  Mobile Menu Toggle */
+    .menu-toggle {
+        display: block;
+        font-size: 1.5em;
+        background: none;
+        border: none;
+        color: var(--accent-color);
+        cursor: pointer;
+        z-index: 1001; /* Ensures it's above other elements */
+        position: relative; /* Ensures stacking context is respected */
+    }
+
+    /* Mobile Navbar Links */
+    .nav-links {
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        gap: 10px;
+        background: var(--section-bg);
+        position: fixed; /* Fixed positioning */
+        top: 60px; /* Adjust based on .top-nav height */
+        left: 0;
+        right: 0;
+        z-index: 1000; /* Above other content */
+        padding: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform: translateY(-20px); /* Hidden above */
+        opacity: 0; /* Invisible */
+        pointer-events: none; /* Prevent interactions when hidden */
+    }
+
+    .nav-links.active {
+        display: flex; /* Show the menu */
+        transform: translateY(0); /* Slide down */
+        opacity: 1; /* Fully visible */
+        pointer-events: auto; /* Enable interactions */
+        background-color: var(--section-bg); /* Ensure visibility */
+    }
+
+    .nav-links a {
+        padding: 10px 0;
+        text-align: center;
+        border-bottom: 1px solid #ccc;
+        color: var(--text-color);
+        text-decoration: none;
+        font-size: 1.2em;
+    }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a:hover {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+
+    /* Header Adjustments */
+    header {
+        padding: 40px 15px;
+    }
+
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-width: 3px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    header h2 {
+        font-size: 1.2em;
+    }
+
+    header p {
+        font-size: 1em;
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+        padding: 6px 10px;
+        font-size: 0.9em;
+    }
+
+    /* CTA Button */
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    /*  Navbar Links (Desktop to Mobile Conversion) */
+    .top-nav a {
+        margin: 0 10px;
+        font-size: 0.9em;
+    }
+
+    /* Ensure Navbar Stacking is Correct */
+    .top-nav {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+}
+
 </style>

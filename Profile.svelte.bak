@@ -1,5 +1,6 @@
 <script>
     import { base } from "$app/paths";
+    import { onMount } from "svelte";
 
     let name = "Gaanesh Theivasigamani";
     let title = "InfoSec Undergraduate | Security Engineer";
@@ -9,8 +10,9 @@
         Hey! Thanks for visiting my site, I'm Gaanesh, a security enthusiast with a knack for breaking things. 
         I'm currently pursuing a Bachelor of Computing in Information Security at the National University of Singapore (NUS). 
         I have experience in conducting penetration tests, digital forensics, and developing CTF challenges. 
+        I'm also an Undergraduate Teaching Assistant at NUS, guiding students in security concepts. 
         I'm always eager to learn new things and share my knowledge with others. 
-        Feel free to reach out for anything, I'm friendly ;)
+        Feel free to reach out to me for collaborations or just to chat!
     `;
     let profileImageUrl = `${base}/Me.jpg`;
 
@@ -34,13 +36,12 @@
 
     let experience = [
         {
-            company: "GIC",
+            company: "Government Investment Corporation (GIC)",
             role: "GIC Internship Programme (GIP) - Cyber Security Track",
-            duration: "May 2025 - Aug 2025 - 4 Months",
+            duration: "May 2025 - Aug 2025",
             description: [
-                "Incomming Summer Intern for the GIC Internship Programme (GIP) - Cyber Security Track.",
+                "Incomming Summer Intern for the GIC Internship Programme in Cyber Security.",
             ],
-            logo: `${base}/GIC_logo.jpg`,
         },
         {
             company: "National University of Singapore (NUS)",
@@ -51,39 +52,35 @@
                 "Collaborated with NUS IT teams for secure solution implementation, adhering to confidentiality under NDA.",
                 "Part of a year-long contract with the NUS Student Work Scheme (NSWS).",
             ],
-            logo: `${base}/NUS_logo.png`,
         },
         {
             company: "National University of Singapore (NUS)",
             role: "Undergraduate Teaching Assistant - CS2107 Introduction to Information Security",
-            duration: "Aug 2024 - Dec 2024 - 3 Months",
+            duration: "Aug 2024 - Dec 2024",
             description: [
                 "Designed and developed hands-on challenges in cryptography, web security, digital forensics, and reverse engineering.",
                 "Enhanced student engagement and learning outcomes through interactive sessions.",
             ],
-            logo: `${base}/NUS_logo.png`,
         },
         {
             company: "Home Team Science and Technology Agency (HTX)",
             role: "Cyber AI Analytics Intern",
-            duration: "May 2024 - Aug 2024 - 4 Months",
+            duration: "May 2024 - Aug 2024",
             description: [
                 "Performed vulnerability discovery across multiple applications, uncovering potential security risks.",
                 "Configured and deployed an ELK stack for data analysis and visualization.",
                 "Utilized Burp Suite for in-depth API analysis, identifying hidden functionalities and vulnerabilities.",
             ],
-            logo: `${base}/HTX_logo.png`,
         },
         {
             company: "Cyber Security Agency of Singapore (CSA)",
             role: "Cyber Security Specialist",
-            duration: "Aug 2021 - Aug 2023 - 2 Years",
+            duration: "Aug 2021 - Aug 2023",
             description: [
                 "Acquiring Forensic Evidence: I work with victim entities to acquire forensic evidence, including system artifacts and system logs, that can be used to determine the root cause of a cyber incident.",
                 "Digital Forensics Analysis: Utilizing various forensic tools and techniques, I examine the digital evidence obtained from victim entities to determine the underlying cause of a cyber attack. This involves scrutinizing system artifacts like files, network activity logs, system logs, and memory captures.",
                 "Liaising with CIIs and Victims: I act as a liaison between Critical Information Infrastructure providers (CIIs) and victim entities, communicating information about the incident and facilitating a coordinated response to aid in mitigationSpecialising",
             ],
-            logo: `${base}/CSA_logo.jpg`,
         },
     ];
 
@@ -231,29 +228,22 @@ ensuring progress and success in challenging situations.",
         <p>{about_me}</p>
     </div>
 
-<!-- Experience Section -->
-<div class="section" id="experience">
-    <h2>Experience</h2>
-    {#each experience as job}
-        <div class="experience card">
-            <div class="experience-header">
-                <div class="experience-details">
-                    <h3>{job.role}</h3>
-                    <h4>{job.company}</h4>
-                    <p><em>{job.duration}</em></p>
-                </div>
-                <img src="{job.logo}" alt="{job.company} Logo" class="company-logo">
+    <!-- Experience Section -->
+    <div class="section" id="experience">
+        <h2>Experience</h2>
+        {#each experience as job}
+            <div class="experience card">
+                <h3>{job.role}</h3>
+                <h4>{job.company}</h4>
+                <p><em>{job.duration}</em></p>
+                <ul>
+                    {#each job.description as point}
+                        <li>{point}</li>
+                    {/each}
+                </ul>
             </div>
-            <ul>
-                {#each job.description as point}
-                    <li>{point}</li>
-                {/each}
-            </ul>
-        </div>
-    {/each}
-</div>
-
-
+        {/each}
+    </div>
     <!-- Projects Section -->
     <div class="section" id="projects">
         <h2>Projects</h2>
@@ -631,80 +621,6 @@ ensuring progress and success in challenging situations.",
         border-left: 2px solid var(--accent-color);
         padding-left: 12px;
     }
-/* Start */
-    .experience.card {
-    display: flex;
-    flex-direction: column;
-    border-left: 2px solid var(--accent-color);
-    padding-left: 12px;
-    margin-bottom: 20px;
-    background-color: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Experience Header - Flex Layout */
-.experience-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 10px;
-}
-
-/* Company Logo Styling */
-.company-logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    border-radius: 8px;
-    /* background: var(--section-bg);  */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0; /* Prevent logo from shrinking */
-}
-.company-logo:hover {
-    transform: scale(1.1); /* Slight enlargement on hover */
-    transition: transform 0.3s ease;
-}
-
-/* Experience Details Styling */
-.experience-details {
-    flex: 1; /* Takes up remaining space */
-}
-
-.experience-details h3 {
-    font-size: 1.2em;
-    color: var(--header-color);
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-.experience-details h4 {
-    font-size: 1em;
-    font-weight: normal;
-    font-style: italic;
-    margin-bottom: 0.5em;
-    color: var(--text-color);
-}
-
-.experience-details p {
-    font-size: 0.95em;
-    margin-bottom: 1em;
-    line-height: 1.4;
-}
-
-/* Experience Card List Styling */
-.experience.card ul {
-    margin-top: 10px;
-    padding-left: 20px;
-    list-style-type: disc;
-}
-
-.experience.card li {
-    margin-bottom: 5px;
-    font-size: 0.9em;
-}
-
-/* End */
 
     /* Headers inside cards */
     .experience.card h3,
@@ -904,52 +820,6 @@ ensuring progress and success in challenging situations.",
         .testimonial-position {
             font-size: 0.85em;
         }
-
-        /* Start */
-        .experience-header {
-        display: flex;
-        flex-direction: row; /* Align horizontally on mobile */
-        align-items: center; /* Vertically align logo and text */
-        gap: 12px; /* Space between logo and text */
-    }
-
-    .company-logo {
-        width: 50px; /* Smaller logo for mobile */
-        height: 50px;
-        object-fit: contain;
-        border-radius: 8px;
-        background: var(--section-bg);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        flex-shrink: 0; /* Prevent logo resizing */
-    }
-
-    .experience-details {
-        flex: 1; /* Occupy remaining space */
-        text-align: left; /* Align text properly */
-    }
-
-    .experience-details h3 {
-        font-size: 1em;
-        margin: 0;
-    }
-
-    .experience-details h4 {
-        font-size: 0.9em;
-        margin: 2px 0;
-    }
-
-    .experience-details p {
-        font-size: 0.85em;
-        margin: 2px 0;
-    }
-
-    .experience.card ul {
-        margin-top: 10px;
-        padding-left: 20px;
-        text-align: left;
-    }
-
-    /* END */
 
         /*  Mobile Menu Toggle */
         .menu-toggle {

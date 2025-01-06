@@ -100,38 +100,12 @@
         },
     ];
     let certifications = [
-        {
-        name: "OSED (OffSec Exploit Developer)",
-        logo: `${base}/OSED_logo.svg`,
-        date: "Enrolled, expected completion in 2025 ¯\\_(ツ)_/¯"
-        },
-    {
-        name: "GREM (GIAC Reverse Engineering Malware)",
-        logo: `${base}/GREM.png`,
-        date: "Nov 2024 - Nov 2028"
-    },
-    {
-        name: "OSWE (OffSec Web Expert)",
-        logo: `${base}/OSWE_logo.svg`,
-        date: "Jul 2024"
-    },
-    {
-        name: "GCFA (GIAC Certified Forensic Analyst)",
-        logo: `${base}/GCFA.png`,
-        date: "Jun 2024 - Jun 2028"
-    },
-    {
-        name: "CEH (Certified Ethical Hacker)",
-        logo: `${base}/CEH.png`,
-        date: "Apr 2024 - Apr 2027"
-    },
-    {
-        name: "OSCP (OffSec Certified Professional)",
-        logo: `${base}/OSCP_logo.svg`,
-        date: "Mar 2024"
-    }
-];
-
+        "OSCP (OffSec Certified Professional)",
+        "OSWE (OffSec Web Expert)",
+        "GREM (GIAC Reverse Engineering Malware)",
+        "GCFA (GIAC Certified Forensic Analyst)",
+        "CEH (Certified Ethical Hacker)",
+    ];
     let projects = [
         {
             name: "IR Dojo - CTF Training For Everyone",
@@ -197,12 +171,19 @@ ensuring progress and success in challenging situations.",
     </button>
     <div class="nav-links" class:active={isNavActive}>
         <a href="#AboutMe" on:click={() => (isNavActive = false)}>About Me</a>
-        <a href="#experience" on:click={() => (isNavActive = false)}>Experience</a>
-        <a href="#certifications" on:click={() => (isNavActive = false)}>Certifications</a>
+        <a href="#experience" on:click={() => (isNavActive = false)}
+            >Experience</a
+        >
         <a href="#projects" on:click={() => (isNavActive = false)}>Projects</a>
-        <a href="#education" on:click={() => (isNavActive = false)}>Education</a>
+        <a href="#education" on:click={() => (isNavActive = false)}>Education</a
+        >
+        <a href="#certifications" on:click={() => (isNavActive = false)}
+            >Certifications</a
+        >
         <a href="#skills" on:click={() => (isNavActive = false)}>Skills</a>
-        <a href="#testimonials" on:click={() => (isNavActive = false)}>Testimonials</a>
+        <a href="#testimonials" on:click={() => (isNavActive = false)}
+            >Testimonials</a
+        >
     </div>
 </nav>
 
@@ -272,21 +253,6 @@ ensuring progress and success in challenging situations.",
     {/each}
 </div>
 
-    <!-- Certifications Section -->
-    <div class="section" id="certifications">
-        <h2>Certifications</h2>
-        <ul>
-            {#each certifications as cert}
-                <li class="certification-item">
-                    <div class="cert-info">
-                        <span class="cert-name">{cert.name}</span>
-                        <span class="cert-date">{cert.date}</span>
-                    </div>
-                    <img src="{cert.logo}" alt="{cert.name} Logo" class="cert-logo">
-                </li>
-            {/each}
-        </ul>
-    </div>
 
     <!-- Projects Section -->
     <div class="section" id="projects">
@@ -312,8 +278,15 @@ ensuring progress and success in challenging situations.",
         {/each}
     </div>
 
-
-    
+    <!-- Certifications Section -->
+    <div class="section" id="certifications">
+        <h2>Certifications</h2>
+        <ul>
+            {#each certifications as cert}
+                <li>{cert}</li>
+            {/each}
+        </ul>
+    </div>
 
     <!-- Skills Section -->
     <div class="section" id="skills">
@@ -819,92 +792,6 @@ ensuring progress and success in challenging situations.",
         font-size: 1.2em;
         color: var(--accent-color);
     }
-    /* Start */
-
-    /* Certifications Section Styling */
-#certifications ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.certification-item {
-    display: flex;
-    align-items: center; /* Vertically align items */
-    justify-content: space-between; /* Space between text and logo */
-    gap: 12px; /* Space between icon, text, and logo */
-    padding: 12px 16px;
-    margin-bottom: 10px;
-    background: var(--card-bg);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.certification-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-.cert-logo:hover {
-    transform: scale(1.1); /* Slightly enlarge the logo */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
-    cursor: pointer; /* Indicate interactivity */
-}
-
-/* Certification Icon (e.g., 📜 Emoji) */
-.certification-item::before {
-    content: "📜";
-    font-size: 1.4em;
-    flex-shrink: 0;
-}
-
-/* Certification Logo Styling */
-.cert-logo {
-    width: 60px; /* Adjust for better visibility */
-    height: 60px;
-    object-fit: contain;
-    border-radius: 8px;
-    background: var(--section-bg);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.cert-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    text-align: left;
-}
-
-.cert-name {
-    font-size: 1em;
-    font-weight: 600;
-    color: var(--text-color);
-    margin-bottom: 4px;
-}
-
-.cert-date {
-    font-size: 0.85em;
-    color: var(--accent-color);
-    font-style: italic;
-}
-
-
-/* Certification Text Styling */
-.certification-item span {
-    flex: 1; /* Take up remaining space */
-    font-size: 1em;
-    font-weight: 500;
-    color: var(--text-color);
-    text-align: left;
-    margin-left: 8px; /* Add spacing between icon and text */
-}
-
-    /* End */
-
-
 
     /* Specific Icon for Skills */
     #skills ul li::before {
@@ -1063,24 +950,6 @@ ensuring progress and success in challenging situations.",
     }
 
     /* END */
-    .certification-item {
-        flex-direction: row; /* Horizontal layout on mobile */
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-    }
-
-    .cert-logo {
-        width: 50px; /* Smaller on mobile */
-        height: 50px;
-    }
-
-    .certification-item span {
-        font-size: 0.9em;
-    }
-
-
-    
 
         /*  Mobile Menu Toggle */
         .menu-toggle {

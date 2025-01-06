@@ -13,24 +13,35 @@
         Feel free to reach out for anything, I'm friendly ;)
     `;
     let profileImageUrl = `${base}/Me.jpg`;
-
-    let darkMode = true;
-
     let isNavActive = false;
+    let darkMode = true; // Default to dark mode
 
-    // Toggle Dark Mode
-    function toggleDarkMode() {
-        darkMode = !darkMode;
-        document.body.classList.toggle("dark", darkMode);
-        localStorage.setItem("theme", darkMode ? "dark" : "light");
+    
+
+// Check and apply the theme on page load
+if (typeof window !== "undefined") {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme) {
+        // Apply the saved theme
+        darkMode = savedTheme === "dark";
+    } else {
+        // Default to dark mode if no preference is stored
+        darkMode = true;
+        localStorage.setItem("theme", "dark");
     }
 
-    if (typeof window !== "undefined") {
-        darkMode = localStorage.getItem("theme") === "dark";
-        if (darkMode) {
-            document.body.classList.add("dark");
-        }
-    }
+    // Apply the theme class to the body
+    document.body.classList.toggle("dark", darkMode);
+}
+
+// Toggle Dark Mode
+function toggleDarkMode() {
+    darkMode = !darkMode; // Toggle the dark mode value
+    document.body.classList.toggle("dark", darkMode); // Apply the class
+    localStorage.setItem("theme", darkMode ? "dark" : "light"); // Save preference
+}
+
 
     let experience = [
         {

@@ -1,16 +1,15 @@
 <script>
     import { base } from "$app/paths";
 
-    let name = "Gaanesh Theivasigamani";
-    let title = "InfoSec Undergraduate | Security Engineer";
-    let summary =
-        "Passionate about cybersecurity with hands-on experience in Penetration Testing, Digital Forensics, and mentoring students in security concepts.";
+    let name = "Gaanesh Theivasigamani!!!!!!!!";
+    let title = "InfoSec Undergraduate (NUS) | Security Engineer";
+    let summary = "Passionate about cybersecurity and breaking things." 
+
     let about_me = `
-        Hey! Thanks for visiting my site, I'm Gaanesh, a security enthusiast with a knack for breaking things. 
-        I'm currently pursuing a Bachelor of Computing in Information Security at the National University of Singapore (NUS). 
-        I have experience in conducting penetration tests, digital forensics, and developing CTF challenges. 
-        I'm always eager to learn new things and share my knowledge with others. 
-        Feel free to reach out for anything, I'm friendly ;)
+        Hey there! I'm Gaanesh, an Information Security undergraduate at the National University of Singapore. 
+        My passion and experiences lie in conducting penetration tests, digital forensics, and developing CTF challenges. 
+        I'm always eager to stack new knowledge, expand my horizons and exchange insights with others (I got heaps). 
+        Feel free to reach out for anything - I won't byte ;)
     `;
     let profileImageUrl = `${base}/Me.jpg`;
     let isNavActive = false;
@@ -492,6 +491,7 @@ ensuring progress and success in challenging situations.",
             #011d06,
             #ff7e5f
         ); /* Gradient color */
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 15px;
@@ -695,7 +695,7 @@ ensuring progress and success in challenging situations.",
     height: 100px;
     object-fit: contain;
     border-radius: 8px;
-    /* background: var(--section-bg);  */
+    background: var(--section-bg); 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-shrink: 0; /* Prevent logo from shrinking */
 }

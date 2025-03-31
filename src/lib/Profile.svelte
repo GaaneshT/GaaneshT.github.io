@@ -250,9 +250,16 @@ ensuring progress and success in challenging situations.",
                 <i class="fab fa-twitter"></i>
             </a>
         </div>
-        <button class="theme-toggle" on:click={toggleDarkMode}>
-            {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
-        </button>
+        <div class="button-stack">
+            <a class="theme-toggle" href="https://blog.gaanesh.com" target="_blank" rel="noopener noreferrer">
+              📓 Visit My Blog
+            </a>
+            <button class="theme-toggle" on:click={toggleDarkMode}>
+              {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+            </button>
+          </div>
+
+          
     </header>
 
     <div class="section" id="AboutMe">
@@ -573,6 +580,7 @@ ensuring progress and success in challenging situations.",
     .theme-toggle {
         margin-top: 20px;
         padding: 10px 16px;
+        min-width: 160px;
         font-size: 1em;
         border: none;
         border-radius: 4px;
@@ -743,6 +751,14 @@ ensuring progress and success in challenging situations.",
 }
 
 /* End */
+
+.button-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 10px; 
+}
+
 
     /* Headers inside cards */
     .experience.card h3,
@@ -1179,6 +1195,8 @@ ensuring progress and success in challenging situations.",
         .theme-toggle {
             padding: 6px 10px;
             font-size: 0.9em;
+            
+            
         }
 
         /* CTA Button */

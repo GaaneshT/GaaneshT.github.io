@@ -1,7 +1,7 @@
 <script>
     import { base } from "$app/paths";
 
-    let name = "Gaanesh Theivasigamani!!!!!!!!";
+    let name = "Gaanesh Theivasigamani";
     let title = "InfoSec Undergraduate (NUS) | Security Engineer";
     let summary = "Passionate about cybersecurity and breaking things." 
 
@@ -229,7 +229,7 @@ ensuring progress and success in challenging situations.",
                 href="https://github.com/GaaneshT"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub"
+                aria-label="GitHub" 
             >
                 <i class="fab fa-github"></i>
             </a>

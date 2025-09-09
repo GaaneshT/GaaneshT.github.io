@@ -534,7 +534,7 @@ Feel free to reach out for anything - I won't byte ;)
   /* clamp on mobile only */
   @media (max-width: 899px) {
     .experience-details h3 {
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+      display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
     }
   }
 

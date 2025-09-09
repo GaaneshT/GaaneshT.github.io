@@ -197,13 +197,7 @@ Feel free to reach out for anything - I won't byte ;)
         "Created an automated form processing flow with React and AWS, securing a Top 5 finalist position."
     }
   ];
-  const skills = [
-    "Penetration Testing",
-    "Vulnerability Assessment",
-    "Incident Response",
-    "Digital Forensics",
-    "Malware Analysis & Reverse Engineering"
-  ];
+
   const testimonials = [
     {
       name: "Lee Jia Quan (Benny)",
@@ -263,7 +257,6 @@ Feel free to reach out for anything - I won't byte ;)
     <a href="#certifications" on:click={() => (isNavActive = false)}>Certifications</a>
     <a href="#projects" on:click={() => (isNavActive = false)}>Projects</a>
     <a href="#education" on:click={() => (isNavActive = false)}>Education</a>
-    <a href="#skills" on:click={() => (isNavActive = false)}>Skills</a>
     <a href="#testimonials" on:click={() => (isNavActive = false)}>Testimonials</a>
   </div>
 </nav>
@@ -380,12 +373,6 @@ Feel free to reach out for anything - I won't byte ;)
       </div>
     {/each}
   </div>
-
-  <!-- Skills
-  <div class="section" id="skills">
-    <h2>Skills</h2>
-    <ul>{#each skills as skill}<li>{skill}</li>{/each}</ul>
-  </div> -->
 
   <!-- Testimonials -->
   <div class="section" id="testimonials">

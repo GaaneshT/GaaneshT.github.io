@@ -3,7 +3,7 @@
 
     let name = "Gaanesh Theivasigamani";
     let title = "InfoSec Undergraduate (NUS) | Security Engineer";
-    let summary = "Passionate about cybersecurity and breaking things." 
+    let summary = "Passionate about cybersecurity and breaking(and fixing) things." 
 
     let about_me = `
         Hey there! I'm Gaanesh, an Information Security undergraduate at the National University of Singapore. 
@@ -43,12 +43,37 @@ function toggleDarkMode() {
 
 
     let experience = [
+            {
+            company: "GIC",
+            role: "GIC Professionals Programme (GPP) - Technology Track (Cybersecurity)",
+            duration: "March 2026",
+            description: [
+                "Returning Full-time Analyst for the GIC Professionals Programme (GPP) - Technology Track (Cybersecurity).",
+                "Starting March 2026."
+            ],
+            logo: `${base}/GIC_logo.jpg`,
+        },
+            {
+            company: "GovTech Singapore",
+            role: "Cyber Security Intern",
+            duration: "Jan 2026 - March 2026 - 3 Months",
+            description: [
+                "Incoming GovTech Intern at Cyber Security Group (CSG)",
+                "Project Title: Agentic AI for Cybersecurity Operations"
+            ],
+            logo: `${base}/govtech_logo.gif`,
+        },
         {
             company: "GIC",
-            role: "GIC Internship Programme (GIP) - Cyber Security Track",
+            role: "Cyber Security Intern",
             duration: "May 2025 - Aug 2025 - 4 Months",
             description: [
-                "Incomming Summer Intern for the GIC Internship Programme (GIP) - Cyber Security Track.",
+                "Created an internal chatbot using agentic RAG architecture, reducing average response time from ~1 hour to ~20 seconds and improving team productivity by 99%.",
+                "Developed automation scripts to replace manual workflows, reducing SLA from 5 days to ~2 minutes for key cloud security processes.",
+                "Integrated APIs with CI/CD pipelines to streamline deployment and embed security checks.",
+                "Worked with SaaS platforms such as Wiz, Snyk, and F5 to monitor and manage vulnerabilities.",
+                "Provisioned infrastructure using AWS and Infrastructure as Code (IaC) practices.",
+                "Awarded a return offer to join the GIC Professionals Programme (GPP) - Technology Track (Cybersecurity)."
             ],
             logo: `${base}/GIC_logo.jpg`,
         },

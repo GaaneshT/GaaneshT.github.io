@@ -591,10 +591,10 @@
     </section>
 
     <footer class="rounded-3xl border border-slate-200/70 bg-white/90 p-8 text-center shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
-      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Let's build resilient systems together</h2>
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Let's build together!</h2>
       <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
         I'm always up for collaborating on security research, challenge design, or automation ideas.
-        Reach out on any platform above – I respond fast.
+        Reach out on any platform above, I respond fast! :D
       </p>
     </footer>
   </main>

@@ -2,34 +2,62 @@
   import { onMount } from "svelte";
   import { base } from "$app/paths";
 
-  // Static content
   const name = "Gaanesh Theivasigamani";
-  const title = "InfoSec Undergraduate (NUS) | Security Engineer";
-  const summary =
-    "Passionate about cybersecurity and breaking (and fixing) things.";
-  const about_me = `
-Hey there! I'm Gaanesh, an Information Security undergraduate at the National University of Singapore. 
-My passion and experiences lie in conducting penetration tests, digital forensics, and developing CTF challenges. 
-I'm always eager to stack new knowledge, expand my horizons and exchange insights with others (I got heaps). 
-Feel free to reach out for anything - I won't byte ;)
-  `;
+  const title = "InfoSec Undergraduate (NUS) · Security Engineer";
+  const summary = "Offensive security, digital forensics, and automating defenses.";
+  const aboutMe = `Hey there! I'm Gaanesh, an Information Security undergraduate at the National University of Singapore. \nI live at the intersection of penetration testing, digital forensics, and building CTF challenges. \nWhether I'm automating detection workflows or tearing through binaries, I'm happiest when learning and sharing battle-tested tradecraft.\nFeel free to reach out – I won't byte ;)`;
   const profileImageUrl = `${base}/Me.jpg`;
   const maxVisibleCerts = 6;
 
-  // UI state
-  let isNavActive = false;
-  let darkMode = true;
-  let certsCollapsed = true;
-  let expanded = new Set<number>(); // indices of expanded experience cards
+  const navLinks = [
+    { id: "about", label: "About" },
+    { id: "experience", label: "Experience" },
+    { id: "certifications", label: "Certifications" },
+    { id: "projects", label: "Projects" },
+    { id: "education", label: "Education" },
+    { id: "testimonials", label: "Testimonials" }
+  ];
 
-  // Experience data
+  const focusAreas = [
+    {
+      title: "Penetration Testing",
+      description: "Hands-on offensive security engagements with a focus on practical exploit paths and impact."
+    },
+    {
+      title: "Digital Forensics",
+      description: "Incident response, evidence acquisition, and root-cause analysis across hybrid environments."
+    },
+    {
+      title: "Security Automation",
+      description: "Agentic AI, RAG pipelines, and workflow automation to scale cyber operations."
+    }
+  ];
+
+  const socialLinks = [
+    {
+      label: "GitHub",
+      icon: "fa-brands fa-github",
+      url: "https://github.com/GaaneshT"
+    },
+    {
+      label: "LinkedIn",
+      icon: "fa-brands fa-linkedin",
+      url: "https://www.linkedin.com/in/gaanesht/"
+    },
+    {
+      label: "X (Twitter)",
+      icon: "fa-brands fa-x-twitter",
+      url: "https://x.com/PlantSecurity"
+    }
+  ];
+
   type ExpStatus = "upcoming" | "current" | "past";
   type Exp = {
     company: string;
     role: string;
     duration: string;
     status: ExpStatus;
-    sortKey: number; // YYYYMM
+    sortKey: number;
     description: string[];
     logo: string;
   };
@@ -132,23 +160,6 @@ Feel free to reach out for anything - I won't byte ;)
     }
   ];
 
-
-  $: experienceSorted = [...experience].sort(
-    (a, b) => (b.sortKey ?? 0) - (a.sortKey ?? 0)
-  );
-  const yearOf = (job: Exp) => Math.floor((job.sortKey ?? 0) / 100);
-  const primaryBadge = (job: Exp, index: number) =>
-    job.status === "current"
-      ? "live"
-      : job.status === "upcoming"
-      ? "upcoming"
-      : index === 0
-      ? "latest"
-      : null;
-  const badgeText = (kind: string) =>
-    kind === "live" ? "Present" : kind === "upcoming" ? "Upcoming" : "Latest";
-
-
   const education = [
     {
       institution: "National University of Singapore (NUS)",
@@ -161,6 +172,7 @@ Feel free to reach out for anything - I won't byte ;)
       duration: "2017 - 2020"
     }
   ];
+
   const certifications = [
     {
       name: "OSED (OffSec Exploit Developer)",
@@ -172,11 +184,28 @@ Feel free to reach out for anything - I won't byte ;)
       logo: `${base}/GREM.png`,
       date: "Nov 2024 - Nov 2028"
     },
-    { name: "OSWE (OffSec Web Expert)", logo: `${base}/OSWE_logo.svg`, date: "Issued Jul 2024" },
-    { name: "GCFA (GIAC Certified Forensic Analyst)", logo: `${base}/GCFA.png`, date: "Jun 2024 - Jun 2028" },
-    { name: "CEH (Certified Ethical Hacker)", logo: `${base}/CEH.png`, date: "Apr 2024 - Apr 2027" },
-    { name: "OSCP (OffSec Certified Professional)", logo: `${base}/OSCP_logo.svg`, date: "Issued Mar 2024" }
+    {
+      name: "OSWE (OffSec Web Expert)",
+      logo: `${base}/OSWE_logo.svg`,
+      date: "Issued Jul 2024"
+    },
+    {
+      name: "GCFA (GIAC Certified Forensic Analyst)",
+      logo: `${base}/GCFA.png`,
+      date: "Jun 2024 - Jun 2028"
+    },
+    {
+      name: "CEH (Certified Ethical Hacker)",
+      logo: `${base}/CEH.png`,
+      date: "Apr 2024 - Apr 2027"
+    },
+    {
+      name: "OSCP (OffSec Certified Professional)",
+      logo: `${base}/OSCP_logo.svg`,
+      date: "Issued Mar 2024"
+    }
   ];
+
   const projects = [
     {
       name: "IR Dojo - CTF Training For Everyone",
@@ -219,599 +248,350 @@ Feel free to reach out for anything - I won't byte ;)
     }
   ];
 
-  // Theme
+  const stats = [
+    { label: "Industry certifications", value: certifications.length.toString() },
+    { label: "Security roles & internships", value: experience.length.toString() },
+    { label: "Focus areas", value: focusAreas.length.toString() }
+  ];
+
+  $: experienceSorted = [...experience].sort((a, b) => (b.sortKey ?? 0) - (a.sortKey ?? 0));
+
+  const yearOf = (job: Exp) => Math.floor((job.sortKey ?? 0) / 100);
+
+  const badgeConfig = {
+    latest: {
+      label: "Latest",
+      classes: "bg-sky-500/10 text-sky-500 ring-1 ring-sky-500/30"
+    },
+    live: {
+      label: "Present",
+      classes: "bg-emerald-500/10 text-emerald-500 ring-1 ring-emerald-500/30"
+    },
+    upcoming: {
+      label: "Upcoming",
+      classes: "bg-amber-400/10 text-amber-500 ring-1 ring-amber-500/30"
+    }
+  } as const;
+
+  const primaryBadge = (job: Exp, index: number) =>
+    job.status === "current"
+      ? "live"
+      : job.status === "upcoming"
+      ? "upcoming"
+      : index === 0
+      ? "latest"
+      : null;
+
+  const resolveBadge = (job: Exp, index: number) => {
+    const key = primaryBadge(job, index);
+    return key ? badgeConfig[key] : null;
+  };
+
+  let isNavOpen = false;
+  let certsCollapsed = true;
+  let expanded = new Set<number>();
+
+  const applyTheme = (shouldUseDark: boolean) => {
+    if (typeof document === "undefined") return;
+    document.documentElement.classList.toggle("dark", shouldUseDark);
+    document.body.classList.toggle("dark", shouldUseDark);
+  };
+
   onMount(() => {
-    const saved = localStorage.getItem("theme");
-    darkMode = saved ? saved === "dark" : true;
-    document.body.classList.toggle("dark", darkMode);
-    if (!saved) localStorage.setItem("theme", "dark");
+    if (typeof window === "undefined") return;
+
+    const query = window.matchMedia?.("(prefers-color-scheme: dark)");
+    if (!query) {
+      applyTheme(true);
+      return;
+    }
+
+    const update = (matches: boolean) => applyTheme(matches);
+
+    update(query.matches);
+
+    const listener = (event: MediaQueryListEvent) => update(event.matches);
+
+    if (typeof query.addEventListener === "function") {
+      query.addEventListener("change", listener);
+      return () => query.removeEventListener("change", listener);
+    }
+
+    if (typeof query.addListener === "function") {
+      query.addListener(listener);
+      return () => query.removeListener(listener);
+    }
   });
 
-  function toggleDarkMode() {
-    darkMode = !darkMode;
-    document.body.classList.toggle("dark", darkMode);
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }
   function toggleExpanded(idx: number) {
-  const next = new Set(expanded);
-  if (next.has(idx)) next.delete(idx);
-  else next.add(idx);
-  expanded = next; // <-- assignment triggers re-render
-}
-
+    const next = new Set(expanded);
+    if (next.has(idx)) {
+      next.delete(idx);
+    } else {
+      next.add(idx);
+    }
+    expanded = next;
+  }
 </script>
 
-<!-- Nav -->
-<nav class="top-nav">
-  <button
-    class="menu-toggle"
-    aria-label="Toggle Menu"
-    aria-expanded={isNavActive}
-    on:click={() => (isNavActive = !isNavActive)}
-  >
-    ☰
-  </button>
-  <div class="nav-links" class:active={isNavActive}>
-    <a href="#AboutMe" on:click={() => (isNavActive = false)}>About Me</a>
-    <a href="#experience" on:click={() => (isNavActive = false)}>Experience</a>
-    <a href="#certifications" on:click={() => (isNavActive = false)}>Certifications</a>
-    <a href="#projects" on:click={() => (isNavActive = false)}>Projects</a>
-    <a href="#education" on:click={() => (isNavActive = false)}>Education</a>
-    <a href="#testimonials" on:click={() => (isNavActive = false)}>Testimonials</a>
-  </div>
-</nav>
+<div class="relative min-h-screen overflow-hidden bg-slate-50 text-slate-800 transition-colors duration-500 dark:bg-slate-950 dark:text-slate-100">
+  <div class="pointer-events-none absolute inset-x-0 top-[-200px] h-[420px] bg-[radial-gradient(circle,_rgba(56,189,248,0.35)_0%,_rgba(15,23,42,0)_60%)] dark:bg-[radial-gradient(circle,_rgba(59,130,246,0.18)_0%,_rgba(15,23,42,0)_60%)]"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[480px] translate-x-1/3 bg-[radial-gradient(circle,_rgba(124,58,237,0.18)_0%,_rgba(15,23,42,0)_65%)] blur-3xl lg:block"></div>
 
-<div class="container">
-  <header>
-    <img src={profileImageUrl} alt="" class="profile-pic" />
-    <h1>{name}</h1>
-    <h2>{title}</h2>
-    <p>{summary}</p>
+  <nav class="fixed left-1/2 top-6 z-40 w-[min(92%,960px)] -translate-x-1/2 rounded-full border border-slate-200/60 bg-white/80 px-5 py-3 shadow-xl backdrop-blur-md transition-colors dark:border-slate-700/60 dark:bg-slate-900/70">
+    <div class="flex items-center justify-between gap-4">
+      <a href="#top" class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">Gaanesh</a>
 
-    <div class="social-media">
-      <a href="https://github.com/GaaneshT" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/gaanesht/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://x.com/PlantSecurity" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-    </div>
-
-    <div class="button-stack">
-      <a class="theme-toggle" href="https://blog.gaanesh.com" target="_blank" rel="noopener noreferrer">📓 Visit My Blog</a>
-      <button class="theme-toggle" on:click={toggleDarkMode}>
-        {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+      <button
+        class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/70 bg-white/80 text-slate-600 shadow-sm transition hover:bg-white hover:text-slate-900 md:hidden dark:border-slate-700/70 dark:bg-slate-900/80 dark:text-slate-200 dark:hover:text-white"
+        aria-label="Toggle navigation"
+        aria-expanded={isNavOpen}
+        on:click={() => (isNavOpen = !isNavOpen)}
+      >
+        <span class="text-lg">{isNavOpen ? "✕" : "☰"}</span>
       </button>
     </div>
-  </header>
 
-  <div class="section" id="AboutMe">
-    <h2>About me</h2>
-    <p>{about_me}</p>
-  </div>
+    <div
+      class={`${isNavOpen ? "mt-4 flex" : "hidden"} flex-col gap-3 md:mt-0 md:flex md:flex-row md:items-center md:justify-center md:gap-6 lg:gap-8`}
+    >
+      {#each navLinks as link}
+        <a
+          href={`#${link.id}`}
+          on:click={() => (isNavOpen = false)}
+          class="rounded-full px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-200/60 hover:text-slate-900 md:px-3 md:text-xs md:uppercase md:tracking-[0.2em] dark:text-slate-300 dark:hover:bg-slate-700/60 dark:hover:text-white"
+        >
+          {link.label}
+        </a>
+      {/each}
 
-  <!-- Experience -->
-  <div class="section" id="experience">
-    <h2>Experience</h2>
-    <div class="experience-grid">
-      {#each experienceSorted as job, i }
-        {#if i === 0 || yearOf(experienceSorted[i - 1]) !== yearOf(job)}
-          <div class="year-divider">{yearOf(job)}</div>
-        {/if}
+    </div>
+  </nav>
 
-        <div class="experience card">
-          {#if primaryBadge(job, i)}
-            <span class="badge {primaryBadge(job, i)}">{badgeText(primaryBadge(job, i))}</span>
-          {/if}
-
-          <div class="experience-header">
-            <div class="experience-details">
-              <h3>{job.role}</h3>
-              <h4>{job.company}</h4>
-              <p><em>{job.duration}</em></p>
-            </div>
-            <img src={job.logo} alt="{job.company} Logo" class="company-logo" />
+  <main id="top" class="relative mx-auto flex max-w-5xl flex-col gap-16 px-4 pb-24 pt-32 sm:px-6 md:pt-36 lg:px-0">
+    <section id="hero" class="relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-2xl backdrop-blur transition-colors dark:border-slate-800/70 dark:bg-slate-900/70 md:p-12">
+      <div class="absolute inset-0 bg-gradient-to-br from-sky-200/30 via-transparent to-purple-200/30 dark:from-sky-500/10 dark:to-purple-500/10"></div>
+      <div class="absolute -right-20 top-20 h-72 w-72 rounded-full bg-sky-400/15 blur-3xl dark:bg-sky-500/20"></div>
+      <div class="relative z-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_280px] md:items-center">
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <span class="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600 dark:border-sky-500/20 dark:bg-sky-500/15 dark:text-sky-300">
+              Security Engineer · Builder · Researcher
+            </span>
+            <h1 class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white sm:text-4xl lg:text-5xl">{name}</h1>
+            <p class="text-lg text-slate-600 dark:text-slate-300">{title}</p>
+            <p class="max-w-2xl text-base text-slate-600 dark:text-slate-300 md:text-lg">{summary}</p>
           </div>
 
-          <ul>
-            {#each (expanded.has(i) ? job.description : job.description.slice(0, 3)) as point}
-              <li>{point}</li>
+          <div class="flex flex-wrap items-center gap-3">
+            {#each socialLinks as social}
+              <a
+                class="group inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/90 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition hover:border-slate-900/30 hover:text-slate-900 dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:text-white"
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+              >
+                <i class={`${social.icon} text-base`}></i>
+                {social.label}
+              </a>
             {/each}
-          </ul>
-
-          {#if job.description.length > 3}
-            <button class="link-btn" on:click={() => toggleExpanded(i)}>
-            {expanded.has(i) ? "Show less" : "Show more"}
-            </button>
-          {/if}
-        </div>
-      {/each}
-    </div>
-  </div>
-
-  <!-- Certifications -->
-  <div class="section" id="certifications">
-    <h2>Certifications</h2>
-    <div class="cert-grid">
-      {#each (certsCollapsed ? certifications.slice(0, maxVisibleCerts) : certifications) as cert}
-        <article class="cert card">
-          <div class="cert-meta">
-            <div class="cert-text">
-              <h3 class="cert-name">{cert.name}</h3>
-              {#if cert.date}<p class="cert-date">{cert.date}</p>{/if}
-            </div>
-            <img src="{cert.logo}" alt="{cert.name} Logo" class="cert-logo" />
+            <a
+              class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
+              href="https://blog.gaanesh.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📓 Visit my blog
+            </a>
           </div>
-        </article>
-      {/each}
-    </div>
 
-    {#if certifications.length > maxVisibleCerts}
-      <button class="link-btn" on:click={() => (certsCollapsed = !certsCollapsed)}>
-        {certsCollapsed ? `Show ${certifications.length - maxVisibleCerts} more` : "Show less"}
-      </button>
-    {/if}
-  </div>
+          <div class="grid gap-4 sm:grid-cols-3">
+            {#each stats as stat}
+              <div class="rounded-2xl border border-slate-200/70 bg-white/90 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-700/70 dark:bg-slate-900/70">
+                <p class="text-2xl font-semibold text-slate-900 dark:text-white">{stat.value}</p>
+                <p class="text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">{stat.label}</p>
+              </div>
+            {/each}
+          </div>
+        </div>
 
-  <!-- Projects -->
-  <div class="section" id="projects">
-    <h2>Projects</h2>
-    {#each projects as project}
-      <div class="projects card">
-        <h3>{project.name}</h3>
-        <p class="meta"><span class="pill pill--date">{project.duration}</span></p>
-        <p>{project.description}</p>
+        <div class="flex justify-center md:justify-end">
+          <div class="relative h-64 w-64 overflow-hidden rounded-3xl border border-slate-200/60 bg-gradient-to-br from-slate-100 to-slate-200 p-2 shadow-xl transition hover:-translate-y-1 dark:border-slate-800/70 dark:from-slate-800 dark:to-slate-900">
+            <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-sky-500/10 via-transparent to-purple-500/10"></div>
+            <img src={profileImageUrl} alt="Portrait of {name}" class="relative h-full w-full rounded-2xl object-cover" />
+          </div>
+        </div>
       </div>
-    {/each}
-  </div>
+    </section>
 
-  <!-- Education -->
-  <div class="section" id="education">
-    <h2>Education</h2>
-    {#each education as edu}
-      <div class="education card">
-        <h3>{edu.institution}</h3>
-        <h4>{edu.degree}</h4>
-        <p class="meta"><span class="pill pill--date">{edu.duration}</span></p>
+    <section id="about" class="grid gap-8 rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-xl backdrop-blur dark:border-slate-800/70 dark:bg-slate-900/60 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+      <div class="space-y-4">
+        <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">About me</h2>
+        <p class="whitespace-pre-line text-base leading-relaxed text-slate-600 dark:text-slate-300">{aboutMe}</p>
       </div>
-    {/each}
-  </div>
+      <div class="grid gap-4">
+        {#each focusAreas as focus}
+          <article class="rounded-2xl border border-slate-200/60 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-800/70 dark:bg-slate-900/70">
+            <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{focus.title}</h3>
+            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{focus.description}</p>
+          </article>
+        {/each}
+      </div>
+    </section>
 
-  <!-- Testimonials -->
-  <div class="section" id="testimonials">
-    <h2>Testimonials</h2>
-    {#each testimonials as t}
-      <div class="testimonial card">
-        {#if t.imageUrl}<img src={t.imageUrl} alt={t.name} class="testimonial-photo" />{/if}
-        <p class="testimonial-text">"{t.text}"</p>
-        <h4 class="testimonial-name">{t.name}</h4>
-        <p class="testimonial-position">{t.position}</p>
-        {#if t.relationship}<p class="testimonial-relationship">{t.relationship}</p>{/if}
-        {#if t.date}<p class="testimonial-date"><em>{t.date}</em></p>{/if}
+    <section id="experience" class="space-y-6">
+      <div class="flex items-center justify-between gap-4">
+        <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Experience</h2>
+        <span class="hidden text-xs uppercase tracking-[0.3em] text-slate-400 md:inline">Timeline</span>
       </div>
-    {/each}
-  </div>
+
+      <div class="relative space-y-10">
+        <div class="absolute left-3 top-0 hidden h-full w-px bg-slate-200/70 md:block dark:bg-slate-800/70"></div>
+
+        {#each experienceSorted as job, i}
+          {@const badge = resolveBadge(job, i)}
+          <div class="relative md:pl-12">
+            {#if i === 0 || yearOf(experienceSorted[i - 1]) !== yearOf(job)}
+              <div class="mb-4 inline-flex rounded-full border border-slate-200/60 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 shadow-sm dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-500">
+                {yearOf(job)}
+              </div>
+            {/if}
+
+            <div class="flex flex-col gap-4 md:flex-row md:items-start">
+              <div class="relative hidden md:block">
+                <span class="absolute left-[-39px] top-2 block h-3 w-3 rounded-full border border-white bg-sky-500 shadow-[0_0_0_6px_rgba(56,189,248,0.18)] dark:border-slate-950 dark:bg-sky-400 dark:shadow-[0_0_0_6px_rgba(56,189,248,0.12)]"></span>
+              </div>
+
+              <article class="relative flex w-full flex-col gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+                <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div class="space-y-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3 class="text-xl font-semibold text-slate-900 dark:text-white">{job.role}</h3>
+                      {#if badge}
+                        <span class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] ${badge.classes}`}>
+                          {badge.label}
+                        </span>
+                      {/if}
+                    </div>
+                    <p class="text-sm font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{job.company}</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">{job.duration}</p>
+                  </div>
+                  <div class="flex shrink-0 items-center justify-center">
+                    <img src={job.logo} alt={`${job.company} logo`} class="h-16 w-16 rounded-2xl border border-slate-200/60 bg-white/80 object-contain p-2 shadow-sm dark:border-slate-800/70 dark:bg-slate-900/60" />
+                  </div>
+                </div>
+
+                <ul class="space-y-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                  {#each (expanded.has(i) ? job.description : job.description.slice(0, 3)) as detail}
+                    <li class="flex items-start gap-2">
+                      <span class="mt-1 inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400"></span>
+                      <span>{detail}</span>
+                    </li>
+                  {/each}
+                </ul>
+
+                {#if job.description.length > 3}
+                  <button
+                    class="self-start text-sm font-semibold text-sky-600 transition hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300"
+                    on:click={() => toggleExpanded(i)}
+                  >
+                    {expanded.has(i) ? "Show less" : "Show more"}
+                  </button>
+                {/if}
+              </article>
+            </div>
+          </div>
+        {/each}
+      </div>
+    </section>
+
+    <section id="certifications" class="space-y-6">
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Certifications</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        {#each (certsCollapsed ? certifications.slice(0, maxVisibleCerts) : certifications) as cert}
+          <article class="flex items-center gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-5 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+            <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200/60 bg-white/90 p-2 shadow-sm dark:border-slate-800/70 dark:bg-slate-900/60">
+              <img src={cert.logo} alt={`${cert.name} logo`} class="h-full w-full object-contain" loading="lazy" />
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900 dark:text-white">{cert.name}</h3>
+              {#if cert.date}<p class="text-sm text-slate-500 dark:text-slate-400">{cert.date}</p>{/if}
+            </div>
+          </article>
+        {/each}
+      </div>
+
+      {#if certifications.length > maxVisibleCerts}
+        <button
+          class="rounded-full border border-slate-200/70 bg-white/90 px-5 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-900/20 hover:text-slate-900 dark:border-slate-800/70 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:text-white"
+          on:click={() => (certsCollapsed = !certsCollapsed)}
+        >
+          {certsCollapsed ? `Show ${certifications.length - maxVisibleCerts} more` : "Show less"}
+        </button>
+      {/if}
+    </section>
+
+    <section id="projects" class="space-y-6">
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Projects</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {#each projects as project}
+          <article class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 via-purple-400 to-pink-400"></div>
+            <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{project.name}</h3>
+            <p class="mt-2 text-sm font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{project.duration}</p>
+            <p class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{project.description}</p>
+          </article>
+        {/each}
+      </div>
+    </section>
+
+    <section id="education" class="space-y-6">
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Education</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {#each education as edu}
+          <article class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+            <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-purple-400 via-sky-400 to-blue-500"></div>
+            <div class="pl-4">
+              <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{edu.institution}</h3>
+              <p class="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">{edu.degree}</p>
+              <p class="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-slate-800/70 dark:bg-slate-900/70 dark:text-slate-300">{edu.duration}</p>
+            </div>
+          </article>
+        {/each}
+      </div>
+    </section>
+
+    <section id="testimonials" class="space-y-6">
+      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Testimonials</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {#each testimonials as testimonial}
+          <article class="flex h-full flex-col gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+            <div class="flex items-center gap-3">
+              {#if testimonial.imageUrl}
+                <img src={testimonial.imageUrl} alt={testimonial.name} class="h-14 w-14 rounded-full border border-slate-200/60 object-cover dark:border-slate-800/70" />
+              {/if}
+              <div>
+                <h3 class="text-base font-semibold text-slate-900 dark:text-white">{testimonial.name}</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">{testimonial.position}</p>
+              </div>
+            </div>
+            <p class="flex-1 whitespace-pre-line text-sm leading-relaxed text-slate-600 dark:text-slate-300">"{testimonial.text}"</p>
+            <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              {#if testimonial.relationship}<p>{testimonial.relationship}</p>{/if}
+              {#if testimonial.date}<p><em>{testimonial.date}</em></p>{/if}
+            </div>
+          </article>
+        {/each}
+      </div>
+    </section>
+
+    <footer class="rounded-3xl border border-slate-200/70 bg-white/90 p-8 text-center shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Let's build resilient systems together</h2>
+      <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+        I'm always up for collaborating on security research, challenge design, or automation ideas.
+        Reach out on any platform above – I respond fast.
+      </p>
+    </footer>
+  </main>
 </div>
-
-<style>
-  /* ---------- Vars ---------- */
-  :global(:root) {
-    --bg-color: #f9fafc;
-    --text-color: #333;
-    --section-bg: #fff;
-    --accent-color: #4a90e2;
-    --header-color: #2c3e50;
-    --card-bg: #f4f7fa;
-
-    /* badge/layout metrics */
-    --logo-size: 100px;
-    --logo-gap: 16px;
-    --badge-pad: 8px;
-    --badge-reserve: 28px;
-  }
-  :global(body.dark) {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --section-bg: #1e1e1e;
-    --accent-color: #90caf9;
-    --header-color: #fff;
-    --card-bg: #2e2e2e;
-  }
-
-  /* ---------- Base ---------- */
-  :global(body) {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    transition: background-color .3s ease, color .3s ease;
-    scroll-behavior: smooth;
-  }
-  .container {
-    max-width: 1300px;
-    margin: 20px auto;
-    padding: 20px;
-    background: var(--section-bg);
-    box-shadow: 0 4px 8px rgba(0,0,0,.1);
-    border-radius: 8px;
-  }
-
-  /* ---------- Header ---------- */
-  header {
-    padding: 60px 20px;
-    background: linear-gradient(135deg, #708399 0%, #b4265136 100%);
-    border-radius: 8px;
-    color: #fff;
-    text-align: center;
-    position: relative;
-    margin-bottom: 40px;
-    box-shadow: 0 4px 8px rgba(0,0,0,.1);
-    overflow: hidden;
-  }
-  header::before, header::after {
-    content: "";
-    position: absolute;
-    width: 100px; height: 100px;
-    background: rgba(255,255,255,.1);
-    border-radius: 50%;
-    z-index: 0;
-  }
-  header::before { top: -50px; right: -50px; transform: rotate(45deg); }
-  header::after  { bottom: -50px; left: -50px; transform: rotate(-45deg); }
-  header > * { position: relative; z-index: 1; }
-
-  .profile-pic {
-    width: 150px; height: 150px; object-fit: cover; border-radius: 50%;
-    margin: 0 auto 20px; border: 4px solid var(--accent-color);
-    box-shadow: 0 4px 8px rgba(0,0,0,.2);
-    transition: transform .3s ease, box-shadow .3s ease;
-  }
-  .profile-pic:hover { transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,.3); }
-
-  header h1 { font-size: 3em; margin: 10px 0; color: var(--header-color); text-shadow: 1px 1px 2px rgba(0,0,0,.2); }
-  header h2 {
-    font-size: 1.5em; margin-bottom: 15px;
-    background: linear-gradient(90deg, #011d06, #ff7e5f);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  :global(body.dark) header h2 {
-    background: linear-gradient(90deg, #07ad26, #ff7e5f);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  header p {
-    font-size: 1.1em; max-width: 600px; margin: 0 auto 20px; font-weight: 700;
-    background: linear-gradient(90deg, #4c4b63, #6a11cb, #3f0d12);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  :global(body.dark) header p {
-    background: linear-gradient(90deg, #64dab2, #735dc2, #9954b4);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .social-media { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
-  .social-media a {
-    width: 40px; height: 40px; display:flex; align-items:center; justify-content:center;
-    border-radius: 50%; color:#fff; background: var(--accent-color); font-size: 1.2em;
-    transition: background-color .3s, transform .3s;
-  }
-  .social-media a:hover { background: #6aa9e9; transform: scale(1.1); }
-  .button-stack { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .theme-toggle {
-    margin-top: 20px; padding: 10px 16px; min-width: 160px; border: none; border-radius: 4px;
-    background: var(--accent-color); color:#fff; cursor: pointer; transition: background-color .3s;
-  }
-  .theme-toggle:hover { background: #6aa9e9; }
-
-  /* ---------- Sections ---------- */
-  .section { margin-block: 32px; padding: 15px; border-radius: 6px; background: var(--card-bg); }
-  .section h2 {
-    font-size: 1.8em; font-weight: 800; text-align: center; margin: 0 0 20px;
-    background: linear-gradient(90deg, #4a90e2, #6a11cb);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-transform: uppercase; letter-spacing: 1px;
-  }
-
-  .card {
-    padding: 15px; margin-bottom: 15px; border-radius: 8px; background: var(--card-bg);
-    box-shadow: 0 2px 5px rgba(0,0,0,.1); transition: transform .2s, box-shadow .2s;
-  }
-  .card:hover { transform: translateY(-5px); box-shadow: 0 4px 8px rgba(0,0,0,.2); }
-
-  /* ---------- Experience ---------- */
-  .experience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 16px; }
-  .year-divider {
-    grid-column: 1 / -1; margin: 4px 0 0; padding-top: 6px; font-weight: 800; letter-spacing: .06em;
-    text-transform: uppercase; color: var(--accent-color); border-top: 1px solid rgba(255,255,255,.06); opacity: .95;
-  }
-  .experience.card {
-    position: relative;
-    display: flex; flex-direction: column;
-    border-left: 2px solid var(--accent-color); padding-left: 12px;
-  }
-  .experience-header { display: flex; align-items: center; gap: 16px; margin-bottom: 10px; }
-  .experience-details { flex: 1; }
-  .experience-details h3 { font-size: 1.2em; color: var(--header-color); margin: 0 0 5px; font-weight: 600; }
-  .experience-details h4 { font-size: 1em; font-style: italic; margin: 0 0 .5em; color: var(--text-color); }
-  .experience-details p { font-size: .95em; margin: 0 0 1em; line-height: 1.4; }
-
-  /* clamp on mobile only */
-  @media (max-width: 899px) {
-    .experience-details h3 {
-      display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
-    }
-  }
-
-  .company-logo {
-    width: var(--logo-size); height: var(--logo-size); object-fit: contain; border-radius: 8px;
-    background: var(--section-bg); box-shadow: 0 2px 4px rgba(0,0,0,.1); padding: 6px; opacity: .95; flex-shrink: 0;
-    transition: transform .3s ease;
-  }
-  .company-logo:hover { transform: scale(1.1); }
-
-  .experience.card ul { margin-top: 10px; padding-left: 20px; list-style-type: disc; }
-  .experience.card li { margin-bottom: 5px; font-size: .9em; }
-  .experience.card li::marker { content: "➤ "; color: var(--text-color); }
-
-  .link-btn {
-    margin-top: 8px; border: 0; background: none; color: var(--accent-color);
-    font-weight: 600; cursor: pointer; padding: 4px 0;
-  }
-  .link-btn:hover { text-decoration: underline; }
-
-  /* Badge: avoid logo overlap + reserve space */
-  .experience.card .badge {
-    position: absolute;
-    top: var(--badge-pad);
-    right: calc(var(--logo-size) + var(--logo-gap) + var(--badge-pad));
-    padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 700;
-    background: var(--section-bg); border: 1px solid rgba(255,255,255,.08); z-index: 3;
-  }
-  .experience.card:has(.badge) { padding-top: var(--badge-reserve); }
-  .badge.latest   { background: #2f80ed1a; border-color: #2f80ed40; color: #9ec4ff; }
-  .badge.live     { background: #27ae601a; border-color: #27ae6040; color: #9ee2bd; }
-  .badge.upcoming { background: #f2994a1a; border-color: #f2994a40; color: #ffcf9e; }
-
-  /* ---------- Certifications ---------- */
-  .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
-  .cert.card { height: 100%; display: flex; flex-direction: column; }
-  .cert-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .cert-text { display: flex; flex-direction: column; gap: 4px; }
-  .cert-name { margin: 0; font-size: 1rem; color: var(--header-color); font-weight: 600; }
-  .cert-date { margin: 0; font-size: .9rem; color: var(--accent-color); font-style: italic; }
-  .cert-logo { width: 56px; height: 56px; object-fit: contain; background: var(--section-bg); border-radius: 8px; padding: 6px; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
-  @media (max-width: 900px) { .cert-grid { grid-template-columns: 1fr; } }
-
-  /* ---------- Navbar ---------- */
-  .top-nav {
-    position: sticky; top: 0; background: var(--section-bg); padding: 10px; text-align: center;
-    z-index: 999; box-shadow: 0 2px 4px rgba(0,0,0,.1);
-  }
-  .top-nav a { margin: 0 15px; color: var(--accent-color); text-decoration: none; font-weight: bold; transition: color .3s; }
-  .top-nav a:hover { color: #6aa9e9; }
-  .menu-toggle { display: none; font-size: 1.5em; background: none; border: none; color: var(--accent-color); cursor: pointer; }
-
-  /* ---------- Testimonials ---------- */
-  .testimonial.card {
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    border-left: 2px solid var(--accent-color); padding-left: 12px;
-  }
-  .testimonial-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 2px solid var(--accent-color); }
-  .testimonial-text { font-style: italic; margin: 10px 0; }
-  .testimonial-name { font-weight: bold; margin: 5px 0; color: var(--header-color); }
-  .testimonial-position { font-size: .9em; color: var(--accent-color); }
-
-  /* ---------- Mobile tweaks ---------- */
-  @media (max-width: 600px) {
-    :global(:root) { --logo-size: 50px; --logo-gap: 12px; --badge-reserve: 26px; }
-    .testimonial-photo { width: 60px; height: 60px; }
-    .testimonial-text { font-size: .9em; }
-    .top-nav .menu-toggle { display: block; z-index: 1001; }
-    .nav-links {
-      display: none; flex-direction: column; gap: 10px; background: var(--section-bg);
-      position: fixed; top: 60px; left: 0; right: 0; z-index: 1000; padding: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,.1); transform: translateY(-20px); opacity: 0; pointer-events: none;
-      transition: transform .3s ease, opacity .3s ease;
-    }
-    .nav-links.active { display: flex; transform: translateY(0); opacity: 1; pointer-events: auto; }
-    .nav-links a { padding: 10px 0; text-align: center; border-bottom: 1px solid #ccc; color: var(--text-color); font-size: 1.2em; }
-    .nav-links a:last-child { border-bottom: none; }
-    header { padding: 40px 15px; }
-    .profile-pic { width: 100px; height: 100px; border-width: 3px; }
-    header h1 { font-size: 2em; }
-    header h2 { font-size: 1.2em; }
-    header p { font-size: 1em; }
-  }
-
-  #projects { --dot: 10px; --rail-x: -20px; }
-
-#projects .projects.card{
-  position: relative;
-  border: 1px solid rgba(255,255,255,.08);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.03), transparent 60%),
-    var(--card-bg);
-  padding: 16px 16px 16px 18px; 
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-
-/* timeline dot */
-#projects .projects.card::before{
-  content:"";
-  position:absolute;
-  left: var(--rail-x);
-  top: 22px;
-  width: var(--dot);
-  height: var(--dot);
-  border-radius: 999px;
-  background: var(--accent-color);
-  box-shadow: 0 0 0 4px rgba(74,144,226,.18); /* soft glow */
-}
-
-/* timeline rail between cards */
-#projects .projects.card:not(:last-of-type)::after{
-  content:"";
-  position:absolute;
-  left: calc(var(--rail-x) + (var(--dot) / 2) - 1px);
-  top: calc(22px + var(--dot));
-  bottom: -16px;              /* extends past the card shadow */
-  width: 2px;
-  background: linear-gradient(180deg,
-    rgba(255,255,255,.25), rgba(255,255,255,.05));
-}
-
-/* project heading + meta */
-#projects .projects.card h3{
-  margin: 0 0 6px;
-  font-weight: 700;
-  color: var(--header-color);
-}
-#projects .projects.card p em{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-style: normal;
-  font-size: .85rem;
-  color: var(--accent-color);
-  background: rgba(74,144,226,.14);
-  border: 1px solid rgba(74,144,226,.28);
-}
-
-
-/* hover polish */
-#projects .projects.card:hover{
-  transform: translateY(-3px);
-  border-color: rgba(144,202,249,.35);
-  box-shadow: 0 10px 24px rgba(0,0,0,.25);
-}
-
-
-/* ================================
-   EDUCATION — badge + soft gradient
-   ================================ */
-#education .education.card{
-  position: relative;
-  border: 1px solid rgba(255,255,255,.08);
-  background:
-    radial-gradient(900px 180px at 10% -10%, rgba(74,144,226,.12), transparent 60%),
-    var(--card-bg);
-  overflow: hidden;
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-}
-
-/* left accent bar */
-#education .education.card::before{
-  content:"";
-  position:absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  background: linear-gradient(180deg, #6a11cb, #4a90e2);
-  opacity: .85;
-}
-
-/* small cap icon badge */
-#education .education.card::after{
-  content:"🎓";
-  position:absolute;
-  left: 10px;
-  top: 10px;
-  font-size: 16px;
-  opacity:.9;
-}
-
-/* headings + meta */
-#education .education.card h3{
-  margin: 0 0 6px;
-  font-weight: 700;
-  color: var(--header-color);
-}
-#education .education.card h4{
-  margin: 0 0 8px;
-  font-weight: 600;
-  color: rgba(255,255,255,.85);
-}
-:global(body:not(.dark)) #education .education.card h4{
-  color: #4a4a4a;
-}
-
-
-#education .education.card p em{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-style: normal;
-  font-size: .85rem;
-  color: var(--accent-color);
-  background: rgba(74,144,226,.14);
-  border: 1px solid rgba(74,144,226,.28);
-}
-
-
-/* hover */
-#education .education.card:hover{
-  transform: translateY(-3px);
-  border-color: rgba(144,202,249,.35);
-  box-shadow: 0 10px 24px rgba(0,0,0,.25);
-}
-
-
-@media (min-width: 900px){
-  #education { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  #education > h2 { grid-column: 1 / -1; } 
-}
-
-
-@media (max-width: 600px){
-  #projects { --rail-x: -18px; --dot: 9px; }
-}
-#education {
-  --edu-icon-size: 18px;   /* font-size for the emoji */
-  --edu-icon-gap:  12px;   /* space between emoji and text */
-}
-
-/* reserve space on the left equal to icon + gap */
-#education .education.card{
-  padding-left: calc(16px + var(--edu-icon-size) + var(--edu-icon-gap));
-}
-
-
-#education .education.card::after{
-  left: 16px;              /* inside the card, clear of the accent bar */
-  top: 14px;
-  font-size: var(--edu-icon-size);
-  line-height: 1;          /* avoid extra vertical wiggle */
-}
-
-
-@media (max-width: 600px){
-  #education {
-    --edu-icon-size: 16px;
-    --edu-icon-gap: 10px;
-  }
-}
-.pill{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 2px 10px;
-  border-radius: 999px;
-  font-size: .85rem;
-  font-style: normal;
-  color: var(--accent-color);
-  background: rgba(74,144,226,.14);
-  border: 1px solid rgba(74,144,226,.28);
-}
-
-/* CSS calendar icon (consistent across platforms) */
-.pill--date::before{
-  content:"";
-  width: 14px;
-  height: 12px;
-  border-radius: 3px;
-  /* top “binding” bar + body */
-  background:
-    linear-gradient(0deg, rgba(255,255,255,.85), rgba(255,255,255,.85)) top/100% 3px no-repeat,
-    var(--accent-color);
-  box-shadow: inset 0 0 0 2px rgba(74,144,226,.15);
-}
-</style>

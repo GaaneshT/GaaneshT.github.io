@@ -338,7 +338,11 @@
   <div class="pointer-events-none absolute inset-x-0 top-[-200px] h-[420px] bg-[radial-gradient(circle,_rgba(56,189,248,0.35)_0%,_rgba(15,23,42,0)_60%)] dark:bg-[radial-gradient(circle,_rgba(59,130,246,0.18)_0%,_rgba(15,23,42,0)_60%)]"></div>
   <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[480px] translate-x-1/3 bg-[radial-gradient(circle,_rgba(124,58,237,0.18)_0%,_rgba(15,23,42,0)_65%)] blur-3xl lg:block"></div>
 
-  <nav class="fixed left-1/2 top-6 z-40 w-[min(92%,960px)] -translate-x-1/2 rounded-full border border-slate-200/60 bg-white/80 px-5 py-3 shadow-xl backdrop-blur-md transition-colors dark:border-slate-700/60 dark:bg-slate-900/70">
+  <nav
+    class={`fixed left-1/2 top-6 z-40 w-[min(92%,960px)] -translate-x-1/2 border border-slate-200/60 bg-white/80 px-5 shadow-xl backdrop-blur-md transition-all transition-colors dark:border-slate-700/60 dark:bg-slate-900/70 ${
+      isNavOpen ? "rounded-3xl py-4" : "rounded-full py-3"
+    } md:rounded-full md:py-3`}
+  >
     <div class="flex items-center justify-between gap-4">
       <a href="#top" class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">Gaanesh</a>
 

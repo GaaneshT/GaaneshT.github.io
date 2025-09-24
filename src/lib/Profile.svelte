@@ -343,7 +343,7 @@
       <a href="#top" class="text-sm font-semibold uppercase tracking-[0.3em] text-slate-500 transition-colors hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">Gaanesh</a>
 
       <button
-        class="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200/70 bg-white/80 text-slate-600 shadow-sm transition hover:bg-white hover:text-slate-900 md:hidden dark:border-slate-700/70 dark:bg-slate-900/80 dark:text-slate-200 dark:hover:text-white"
+        class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200/70 bg-white/80 text-slate-600 shadow-sm transition hover:bg-white hover:text-slate-900 md:hidden dark:border-slate-700/70 dark:bg-slate-900/80 dark:text-slate-200 dark:hover:text-white"
         aria-label="Toggle navigation"
         aria-expanded={isNavOpen}
         on:click={() => (isNavOpen = !isNavOpen)}
@@ -373,7 +373,7 @@
       <div class="absolute inset-0 bg-gradient-to-br from-sky-200/30 via-transparent to-purple-200/30 dark:from-sky-500/10 dark:to-purple-500/10"></div>
       <div class="absolute -right-20 top-20 h-72 w-72 rounded-full bg-sky-400/15 blur-3xl dark:bg-sky-500/20"></div>
       <div class="relative z-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_280px] md:items-center">
-        <div class="space-y-8">
+        <div class="order-2 space-y-8 md:order-1">
           <div class="space-y-4">
             <span class="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600 dark:border-sky-500/20 dark:bg-sky-500/15 dark:text-sky-300">
               Security Engineer · Builder · Researcher
@@ -410,14 +410,14 @@
             {#each stats as stat}
               <div class="rounded-2xl border border-slate-200/70 bg-white/90 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-700/70 dark:bg-slate-900/70">
                 <p class="text-2xl font-semibold text-slate-900 dark:text-white">{stat.value}</p>
-                <p class="text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-slate-400">{stat.label}</p>
+                <p class="text-[0.65rem] uppercase tracking-[0.1em] text-slate-500 break-words leading-4 dark:text-slate-400 sm:text-xs sm:tracking-[0.25em]">{stat.label}</p>
               </div>
             {/each}
           </div>
         </div>
 
-        <div class="flex justify-center md:justify-end">
-          <div class="relative h-64 w-64 overflow-hidden rounded-3xl border border-slate-200/60 bg-gradient-to-br from-slate-100 to-slate-200 p-2 shadow-xl transition hover:-translate-y-1 dark:border-slate-800/70 dark:from-slate-800 dark:to-slate-900">
+        <div class="order-1 flex justify-center md:order-2 md:justify-end">
+          <div class="relative h-64 w-64 max-w-full overflow-hidden rounded-3xl border border-slate-200/60 bg-gradient-to-br from-slate-100 to-slate-200 p-2 shadow-xl transition hover:-translate-y-1 dark:border-slate-800/70 dark:from-slate-800 dark:to-slate-900 sm:h-72 sm:w-72">
             <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-sky-500/10 via-transparent to-purple-500/10"></div>
             <img src={profileImageUrl} alt="Portrait of {name}" class="relative h-full w-full rounded-2xl object-cover" />
           </div>
@@ -478,7 +478,7 @@
                     <p class="text-sm text-slate-500 dark:text-slate-400">{job.duration}</p>
                   </div>
                   <div class="flex shrink-0 items-center justify-center">
-                    <img src={job.logo} alt={`${job.company} logo`} class="h-16 w-16 rounded-2xl border border-slate-200/60 bg-white/80 object-contain p-2 shadow-sm dark:border-slate-800/70 dark:bg-slate-900/60" />
+                    <img src={job.logo} alt={`${job.company} logo`} class="h-24 w-24 rounded-2xl border border-slate-200/60 bg-white/80 object-contain p-4 shadow-md sm:h-28 sm:w-28 sm:p-5 dark:border-slate-800/70 dark:bg-slate-900/60" />
                   </div>
                 </div>
 

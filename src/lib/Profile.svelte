@@ -291,6 +291,11 @@
   let certsCollapsed = true;
   let expanded = new Set<number>();
 
+  $: visibleCerts = certsCollapsed
+    ? certifications.slice(0, maxVisibleCerts)
+    : certifications;
+  $: visibleCertCount = visibleCerts.length;
+
   const applyTheme = (shouldUseDark: boolean) => {
     if (typeof document === "undefined") return;
     document.documentElement.classList.toggle("dark", shouldUseDark);
@@ -332,13 +337,138 @@
     }
     expanded = next;
   }
+
+  type RevealOptions = {
+    delay?: number;
+    distance?: number;
+    threshold?: number;
+    once?: boolean;
+  };
+
+  type RevealState = {
+    options: Required<RevealOptions>;
+    baseTransform: string;
+  };
+
+  const defaultRevealOptions = {
+    delay: 0,
+    distance: 28,
+    threshold: 0.15,
+    once: true
+  } as const satisfies Required<RevealOptions>;
+
+  let revealObserver: IntersectionObserver | null = null;
+  const revealMap = new Map<HTMLElement, RevealState>();
+  const cleanupTimers = new Map<HTMLElement, number>();
+
+  const initRevealObserver = () => {
+    if (revealObserver || typeof window === "undefined" || typeof IntersectionObserver === "undefined") {
+      return;
+    }
+
+    revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const node = entry.target as HTMLElement;
+          const state = revealMap.get(node);
+
+          if (!state) continue;
+
+          const { options, baseTransform } = state;
+          const prefixedTransform = baseTransform ? `${baseTransform} ` : "";
+
+          if (entry.isIntersecting && entry.intersectionRatio >= options.threshold) {
+            requestAnimationFrame(() => {
+              node.style.opacity = "1";
+              node.style.transform = `${prefixedTransform}translateY(0px)`;
+            });
+
+            const existingTimer = cleanupTimers.get(node);
+            if (existingTimer) {
+              window.clearTimeout(existingTimer);
+            }
+
+            const timer = window.setTimeout(() => {
+              node.style.removeProperty("transition-property");
+              node.style.removeProperty("transition-duration");
+              node.style.removeProperty("transition-timing-function");
+              node.style.removeProperty("transition-delay");
+
+              if (options.once) {
+                node.style.removeProperty("opacity");
+                node.style.removeProperty("transform");
+              }
+
+              cleanupTimers.delete(node);
+            }, 700 + options.delay);
+
+            cleanupTimers.set(node, timer);
+
+            if (options.once) {
+              revealObserver?.unobserve(node);
+              revealMap.delete(node);
+            }
+          } else if (!options.once) {
+            node.style.opacity = "0";
+            node.style.transform = `${prefixedTransform}translateY(${options.distance}px)`;
+          }
+        }
+      },
+      { threshold: Array.from({ length: 6 }, (_, i) => (i + 1) / 6) }
+    );
+  };
+
+  const reveal = (node: HTMLElement, options?: RevealOptions) => {
+    if (typeof window === "undefined") return;
+
+    const resolved = {
+      ...defaultRevealOptions,
+      ...options
+    } satisfies Required<RevealOptions>;
+
+    const computedTransform = window.getComputedStyle(node).transform;
+    const baseTransform = computedTransform === "none" ? "" : computedTransform;
+    const prefixedTransform = baseTransform ? `${baseTransform} ` : "";
+
+    node.style.opacity = "0";
+    node.style.transform = `${prefixedTransform}translateY(${resolved.distance}px)`;
+    node.style.transitionProperty = "opacity, transform";
+    node.style.transitionDuration = "600ms";
+    node.style.transitionTimingFunction = "cubic-bezier(0.25, 0.15, 0.25, 1)";
+    node.style.transitionDelay = `${resolved.delay}ms`;
+
+    revealMap.set(node, { options: resolved, baseTransform });
+
+    initRevealObserver();
+    revealObserver?.observe(node);
+
+    return {
+      destroy() {
+        const timer = cleanupTimers.get(node);
+        if (timer) {
+          window.clearTimeout(timer);
+          cleanupTimers.delete(node);
+        }
+
+        node.style.removeProperty("opacity");
+        node.style.removeProperty("transform");
+        node.style.removeProperty("transition-property");
+        node.style.removeProperty("transition-duration");
+        node.style.removeProperty("transition-timing-function");
+        node.style.removeProperty("transition-delay");
+        revealObserver?.unobserve(node);
+        revealMap.delete(node);
+      }
+    };
+  };
 </script>
 
 <div class="relative min-h-screen overflow-hidden bg-slate-50 text-slate-800 transition-colors duration-500 dark:bg-slate-950 dark:text-slate-100">
-  <div class="pointer-events-none absolute inset-x-0 top-[-200px] h-[420px] bg-[radial-gradient(circle,_rgba(56,189,248,0.35)_0%,_rgba(15,23,42,0)_60%)] dark:bg-[radial-gradient(circle,_rgba(59,130,246,0.18)_0%,_rgba(15,23,42,0)_60%)]"></div>
-  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[480px] translate-x-1/3 bg-[radial-gradient(circle,_rgba(124,58,237,0.18)_0%,_rgba(15,23,42,0)_65%)] blur-3xl lg:block"></div>
+  <div class="pointer-events-none absolute inset-x-0 top-[-200px] h-[420px] animate-glow-shift bg-[radial-gradient(circle,_rgba(56,189,248,0.35)_0%,_rgba(15,23,42,0)_60%)] dark:bg-[radial-gradient(circle,_rgba(59,130,246,0.18)_0%,_rgba(15,23,42,0)_60%)]"></div>
+  <div class="pointer-events-none absolute inset-y-0 right-0 hidden w-[480px] translate-x-1/3 animate-glow-shift bg-[radial-gradient(circle,_rgba(124,58,237,0.18)_0%,_rgba(15,23,42,0)_65%)] blur-3xl lg:block"></div>
 
   <nav
+    use:reveal={{ delay: 120, distance: 14 }}
     class={`fixed left-1/2 top-6 z-40 w-[min(92%,960px)] -translate-x-1/2 border border-slate-200/60 bg-white/80 px-5 shadow-xl backdrop-blur-md transition-all transition-colors dark:border-slate-700/60 dark:bg-slate-900/70 ${
       isNavOpen ? "rounded-3xl py-4" : "rounded-full py-3"
     } md:rounded-full md:py-3`}
@@ -373,11 +503,15 @@
   </nav>
 
   <main id="top" class="relative mx-auto flex max-w-5xl flex-col gap-16 px-4 pb-24 pt-32 sm:px-6 md:pt-36 lg:px-0">
-    <section id="hero" class="relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-2xl backdrop-blur transition-colors dark:border-slate-800/70 dark:bg-slate-900/70 md:p-12">
+    <section
+      id="hero"
+      use:reveal={{ distance: 36 }}
+      class="relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-2xl backdrop-blur transition-colors dark:border-slate-800/70 dark:bg-slate-900/70 md:p-12"
+    >
       <div class="absolute inset-0 bg-gradient-to-br from-sky-200/30 via-transparent to-purple-200/30 dark:from-sky-500/10 dark:to-purple-500/10"></div>
-      <div class="absolute -right-20 top-20 h-72 w-72 rounded-full bg-sky-400/15 blur-3xl dark:bg-sky-500/20"></div>
+      <div class="absolute -right-20 top-20 h-72 w-72 rounded-full bg-sky-400/15 blur-3xl dark:bg-sky-500/20 animate-glow-shift"></div>
       <div class="relative z-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_280px] md:items-center">
-        <div class="order-2 space-y-8 md:order-1">
+        <div class="order-2 space-y-8 md:order-1" use:reveal={{ delay: 80, distance: 28 }}>
           <div class="space-y-4">
             <span class="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-400/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-sky-600 dark:border-sky-500/20 dark:bg-sky-500/15 dark:text-sky-300">
               Security Engineer · Builder · Researcher
@@ -387,7 +521,7 @@
             <p class="max-w-2xl text-base text-slate-600 dark:text-slate-300 md:text-lg">{summary}</p>
           </div>
 
-          <div class="flex flex-wrap items-center gap-3">
+          <div class="flex flex-wrap items-center gap-3" use:reveal={{ delay: 150, distance: 24 }}>
             {#each socialLinks as social}
               <a
                 class="group inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/90 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition hover:border-slate-900/30 hover:text-slate-900 dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:text-white"
@@ -401,16 +535,20 @@
               </a>
             {/each}
             <a
-              class="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
+              class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
               href="https://blog.gaanesh.com"
               target="_blank"
               rel="noopener noreferrer"
             >
+              <span
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/50 to-white/0 opacity-0 transition group-hover:opacity-70 dark:from-slate-900/0 dark:via-slate-900/40 dark:to-slate-900/0 animate-shimmer-ltr"
+              ></span>
               📓 Visit my blog
             </a>
           </div>
 
-          <div class="grid gap-4 sm:grid-cols-3">
+          <div class="grid gap-4 sm:grid-cols-3" use:reveal={{ delay: 220, distance: 20 }}>
             {#each stats as stat}
               <div class="rounded-2xl border border-slate-200/70 bg-white/90 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-700/70 dark:bg-slate-900/70">
                 <p class="text-2xl font-semibold text-slate-900 dark:text-white">{stat.value}</p>
@@ -420,8 +558,8 @@
           </div>
         </div>
 
-        <div class="order-1 flex justify-center md:order-2 md:justify-end">
-          <div class="relative h-64 w-64 max-w-full overflow-hidden rounded-3xl border border-slate-200/60 bg-gradient-to-br from-slate-100 to-slate-200 p-2 shadow-xl transition hover:-translate-y-1 dark:border-slate-800/70 dark:from-slate-800 dark:to-slate-900 sm:h-72 sm:w-72">
+        <div class="order-1 flex justify-center md:order-2 md:justify-end" use:reveal={{ delay: 120, distance: 24 }}>
+          <div class="relative h-64 w-64 max-w-full overflow-hidden rounded-3xl border border-slate-200/60 bg-gradient-to-br from-slate-100 to-slate-200 p-2 shadow-xl transition hover:-translate-y-1 dark:border-slate-800/70 dark:from-slate-800 dark:to-slate-900 sm:h-72 sm:w-72 animate-float-soft">
             <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-sky-500/10 via-transparent to-purple-500/10"></div>
             <img src={profileImageUrl} alt="Portrait of {name}" class="relative h-full w-full rounded-2xl object-cover" />
           </div>
@@ -429,12 +567,16 @@
       </div>
     </section>
 
-    <section id="about" class="grid gap-8 rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-xl backdrop-blur dark:border-slate-800/70 dark:bg-slate-900/60 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-      <div class="space-y-4">
+    <section
+      id="about"
+      use:reveal={{ distance: 32 }}
+      class="grid gap-8 rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-xl backdrop-blur dark:border-slate-800/70 dark:bg-slate-900/60 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]"
+    >
+      <div class="space-y-4" use:reveal={{ delay: 80, distance: 20 }}>
         <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">About me</h2>
         <p class="whitespace-pre-line text-base leading-relaxed text-slate-600 dark:text-slate-300">{aboutMe}</p>
       </div>
-      <div class="grid gap-4">
+      <div class="grid gap-4" use:reveal={{ delay: 160, distance: 24 }}>
         {#each focusAreas as focus}
           <article class="rounded-2xl border border-slate-200/60 bg-white/90 p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-800/70 dark:bg-slate-900/70">
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{focus.title}</h3>
@@ -444,8 +586,8 @@
       </div>
     </section>
 
-    <section id="experience" class="space-y-6">
-      <div class="flex items-center justify-between gap-4">
+    <section id="experience" use:reveal={{ distance: 36 }} class="space-y-6">
+      <div class="flex items-center justify-between gap-4" use:reveal={{ delay: 60, distance: 20 }}>
         <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Experience</h2>
         <span class="hidden text-xs uppercase tracking-[0.3em] text-slate-400 md:inline">Timeline</span>
       </div>
@@ -455,7 +597,8 @@
 
         {#each experienceSorted as job, i}
           {@const badge = resolveBadge(job, i)}
-          <div class="relative md:pl-12">
+          {@const revealDelay = Math.min(i, 6) * 90}
+          <div class="relative md:pl-12" use:reveal={{ delay: revealDelay, distance: 28 }}>
             {#if i === 0 || yearOf(experienceSorted[i - 1]) !== yearOf(job)}
               <div class="mb-4 inline-flex rounded-full border border-slate-200/60 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 shadow-sm dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-500">
                 {yearOf(job)}
@@ -510,11 +653,15 @@
       </div>
     </section>
 
-    <section id="certifications" class="space-y-6">
+    <section id="certifications" use:reveal={{ distance: 32 }} class="space-y-6">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Certifications</h2>
-      <div class="grid gap-4 md:grid-cols-2">
-        {#each (certsCollapsed ? certifications.slice(0, maxVisibleCerts) : certifications) as cert}
-          <article class="flex items-center gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-5 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+      <div class="grid gap-4 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
+        {#each visibleCerts as cert, i}
+          {@const cardDelay = Math.min(i, 6) * 70}
+          <article
+            use:reveal={{ delay: 80 + cardDelay, distance: 24 }}
+            class="flex items-center gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-5 shadow-md transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70"
+          >
             <div class="flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200/60 bg-white/90 p-2 shadow-sm dark:border-slate-800/70 dark:bg-slate-900/60">
               <img src={cert.logo} alt={`${cert.name} logo`} class="h-full w-full object-contain" loading="lazy" />
             </div>
@@ -528,6 +675,7 @@
 
       {#if certifications.length > maxVisibleCerts}
         <button
+          use:reveal={{ delay: 120 + visibleCertCount * 70, distance: 20 }}
           class="rounded-full border border-slate-200/70 bg-white/90 px-5 py-2 text-sm font-semibold text-slate-600 transition hover:border-slate-900/20 hover:text-slate-900 dark:border-slate-800/70 dark:bg-slate-900/70 dark:text-slate-200 dark:hover:text-white"
           on:click={() => (certsCollapsed = !certsCollapsed)}
         >
@@ -536,11 +684,15 @@
       {/if}
     </section>
 
-    <section id="projects" class="space-y-6">
+    <section id="projects" use:reveal={{ distance: 32 }} class="space-y-6">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Projects</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        {#each projects as project}
-          <article class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+      <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
+        {#each projects as project, i}
+          {@const projectDelay = Math.min(i, 5) * 90}
+          <article
+            use:reveal={{ delay: 80 + projectDelay, distance: 24 }}
+            class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70"
+          >
             <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 via-purple-400 to-pink-400"></div>
             <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{project.name}</h3>
             <p class="mt-2 text-sm font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">{project.duration}</p>
@@ -550,11 +702,15 @@
       </div>
     </section>
 
-    <section id="education" class="space-y-6">
+    <section id="education" use:reveal={{ distance: 32 }} class="space-y-6">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Education</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        {#each education as edu}
-          <article class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+      <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
+        {#each education as edu, i}
+          {@const educationDelay = Math.min(i, 5) * 90}
+          <article
+            use:reveal={{ delay: 80 + educationDelay, distance: 24 }}
+            class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70"
+          >
             <div class="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-purple-400 via-sky-400 to-blue-500"></div>
             <div class="pl-4">
               <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{edu.institution}</h3>
@@ -566,11 +722,15 @@
       </div>
     </section>
 
-    <section id="testimonials" class="space-y-6">
+    <section id="testimonials" use:reveal={{ distance: 32 }} class="space-y-6">
       <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Testimonials</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        {#each testimonials as testimonial}
-          <article class="flex h-full flex-col gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+      <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
+        {#each testimonials as testimonial, i}
+          {@const testimonialDelay = Math.min(i, 5) * 90}
+          <article
+            use:reveal={{ delay: 80 + testimonialDelay, distance: 24 }}
+            class="flex h-full flex-col gap-4 rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70"
+          >
             <div class="flex items-center gap-3">
               {#if testimonial.imageUrl}
                 <img src={testimonial.imageUrl} alt={testimonial.name} class="h-14 w-14 rounded-full border border-slate-200/60 object-cover dark:border-slate-800/70" />
@@ -590,7 +750,10 @@
       </div>
     </section>
 
-    <footer class="rounded-3xl border border-slate-200/70 bg-white/90 p-8 text-center shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70">
+    <footer
+      use:reveal={{ distance: 32 }}
+      class="rounded-3xl border border-slate-200/70 bg-white/90 p-8 text-center shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70"
+    >
       <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Let's build together!</h2>
       <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
         I'm always up for collaborating on security research, challenge design, or automation ideas.
@@ -599,3 +762,60 @@
     </footer>
   </main>
 </div>
+
+<style>
+  :global(.animate-glow-shift) {
+    animation: glowShift 24s ease-in-out infinite alternate;
+  }
+
+  :global(.animate-float-soft) {
+    animation: floatSoft 18s ease-in-out infinite;
+  }
+
+  :global(.animate-shimmer-ltr) {
+    animation: shimmerLTR 6s linear infinite;
+  }
+
+  @keyframes glowShift {
+    0% {
+      transform: translate3d(-16px, -10px, 0) scale(1);
+      opacity: 0.65;
+    }
+    50% {
+      transform: translate3d(18px, 16px, 0) scale(1.1);
+      opacity: 0.9;
+    }
+    100% {
+      transform: translate3d(-8px, 12px, 0) scale(1);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes floatSoft {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -12px, 0);
+    }
+  }
+
+  @keyframes shimmerLTR {
+    0% {
+      transform: translateX(-60%);
+    }
+    100% {
+      transform: translateX(120%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.animate-glow-shift),
+    :global(.animate-float-soft),
+    :global(.animate-shimmer-ltr) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+</style>

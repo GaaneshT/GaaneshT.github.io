@@ -96,7 +96,7 @@
       status: "past",
       sortKey: 202508,
       description: [
-        "Created an internal chatbot using agentic RAG architecture, reducing average response time from ~1 hour to ~20 seconds and improving team productivity by 99%.",
+        "Created an internal chatbot using agentic RAG architecture, reducing average response time from ~1 hour to ~20 seconds.",
         "Developed automation scripts to replace manual workflows, reducing SLA from 5 days to ~2 minutes for key cloud security processes.",
         "Integrated APIs with CI/CD pipelines to streamline deployment and embed security checks.",
         "Worked with SaaS platforms such as Wiz, Snyk, and F5 to monitor and manage vulnerabilities.",

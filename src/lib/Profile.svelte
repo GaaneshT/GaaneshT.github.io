@@ -366,6 +366,8 @@
       return;
     }
 
+    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
+
     revealObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -414,7 +416,7 @@
           }
         }
       },
-      { threshold: Array.from({ length: 6 }, (_, i) => (i + 1) / 6) }
+      { threshold: thresholds }
     );
   };
 
@@ -586,8 +588,8 @@
       </div>
     </section>
 
-    <section id="experience" use:reveal={{ distance: 36 }} class="space-y-6">
-      <div class="flex items-center justify-between gap-4" use:reveal={{ delay: 60, distance: 20 }}>
+    <section id="experience" use:reveal={{ distance: 20, threshold: 0 }} class="space-y-6">
+      <div class="flex items-center justify-between gap-4" use:reveal={{ delay: 25, distance: 14, threshold: 0 }}>
         <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Experience</h2>
         <span class="hidden text-xs uppercase tracking-[0.3em] text-slate-400 md:inline">Timeline</span>
       </div>
@@ -597,8 +599,8 @@
 
         {#each experienceSorted as job, i}
           {@const badge = resolveBadge(job, i)}
-          {@const revealDelay = Math.min(i, 6) * 90}
-          <div class="relative md:pl-12" use:reveal={{ delay: revealDelay, distance: 28 }}>
+          {@const revealDelay = Math.min(i, 4) * 45}
+          <div class="relative md:pl-12" use:reveal={{ delay: revealDelay, distance: 20, threshold: 0 }}>
             {#if i === 0 || yearOf(experienceSorted[i - 1]) !== yearOf(job)}
               <div class="mb-4 inline-flex rounded-full border border-slate-200/60 bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 shadow-sm dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-500">
                 {yearOf(job)}

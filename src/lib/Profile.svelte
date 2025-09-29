@@ -208,6 +208,13 @@
 
   const projects = [
     {
+      name: "tools.gaanesh.com",
+      duration: "2025 · Actively maintained",
+      description:
+        "Building a growing suite of self-hosted utilities, starting with PDF and image operations, with more tooling on the way. All done via your browser, no uploads for privacy!",
+        
+    },
+    {
       name: "IR Dojo - CTF Training For Everyone",
       duration: "Dec 2021 - Mar 2022",
       description:
@@ -524,30 +531,46 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-3" use:reveal={{ delay: 150, distance: 24 }}>
-            {#each socialLinks as social}
+            <div class="flex flex-wrap items-center gap-3">
+              {#each socialLinks as social}
+                <a
+                  class="group inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/90 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition hover:border-slate-900/30 hover:text-slate-900 dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:text-white"
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label}
+                >
+                  <i class={`${social.icon} text-base`}></i>
+                  {social.label}
+                </a>
+              {/each}
+            </div>
+            <div class="flex w-full flex-wrap items-center gap-3 sm:w-auto sm:flex-nowrap">
               <a
-                class="group inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/90 px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition hover:border-slate-900/30 hover:text-slate-900 dark:border-slate-700/70 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:text-white"
-                href={social.url}
+                class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:from-sky-600 hover:to-indigo-600 dark:from-sky-400 dark:to-indigo-500"
+                href="https://tools.gaanesh.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={social.label}
               >
-                <i class={`${social.icon} text-base`}></i>
-                {social.label}
+                <span
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/60 to-white/0 opacity-0 transition group-hover:opacity-80 dark:from-slate-900/0 dark:via-slate-900/35 dark:to-slate-900/0 animate-shimmer-ltr"
+                ></span>
+                🛠️ Explore my tools
               </a>
-            {/each}
-            <a
-              class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
-              href="https://blog.gaanesh.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span
-                aria-hidden="true"
-                class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/50 to-white/0 opacity-0 transition group-hover:opacity-70 dark:from-slate-900/0 dark:via-slate-900/40 dark:to-slate-900/0 animate-shimmer-ltr"
-              ></span>
-              📓 Visit my blog
-            </a>
+              <a
+                class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
+                href="https://blog.gaanesh.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/50 to-white/0 opacity-0 transition group-hover:opacity-70 dark:from-slate-900/0 dark:via-slate-900/40 dark:to-slate-900/0 animate-shimmer-ltr"
+                ></span>
+                📓 Visit my blog
+              </a>
+            </div>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-3" use:reveal={{ delay: 220, distance: 20 }}>

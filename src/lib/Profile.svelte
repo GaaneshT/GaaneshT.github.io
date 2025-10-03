@@ -598,7 +598,7 @@
       class="grid gap-8 rounded-3xl border border-slate-200/60 bg-white/80 p-8 shadow-xl backdrop-blur dark:border-slate-800/70 dark:bg-slate-900/60 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]"
     >
       <div class="space-y-4" use:reveal={{ delay: 80, distance: 20 }}>
-        <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">About me</h2>
+        <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">whoami</h2>
         <p class="whitespace-pre-line text-base leading-relaxed text-slate-600 dark:text-slate-300">{aboutMe}</p>
       </div>
       <div class="grid gap-4" use:reveal={{ delay: 160, distance: 24 }}>
@@ -613,8 +613,8 @@
 
     <section id="experience" use:reveal={{ distance: 20, threshold: 0 }} class="space-y-6">
       <div class="flex items-center justify-between gap-4" use:reveal={{ delay: 25, distance: 14, threshold: 0 }}>
-        <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Experience</h2>
-        <span class="hidden text-xs uppercase tracking-[0.3em] text-slate-400 md:inline">Timeline</span>
+        <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">cat ./experience.txt</h2>
+        <!-- <span class="hidden font-mono text-xs tracking-[0.2em] text-slate-400 md:inline">Audit</span> -->
       </div>
 
       <div class="relative space-y-10">
@@ -679,7 +679,7 @@
     </section>
 
     <section id="certifications" use:reveal={{ distance: 32 }} class="space-y-6">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Certifications</h2>
+      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/certs</h2>
       <div class="grid gap-4 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
         {#each visibleCerts as cert, i}
           {@const cardDelay = Math.min(i, 6) * 70}
@@ -710,7 +710,7 @@
     </section>
 
     <section id="projects" use:reveal={{ distance: 32 }} class="space-y-6">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Projects</h2>
+      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/projects</h2>
       <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
         {#each projects as project, i}
           {@const projectDelay = Math.min(i, 5) * 90}
@@ -728,7 +728,7 @@
     </section>
 
     <section id="education" use:reveal={{ distance: 32 }} class="space-y-6">
-      <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Education</h2>
+      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/Education</h2>
       <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
         {#each education as edu, i}
           {@const educationDelay = Math.min(i, 5) * 90}
@@ -779,7 +779,7 @@
       use:reveal={{ distance: 32 }}
       class="rounded-3xl border border-slate-200/70 bg-white/90 p-8 text-center shadow-xl dark:border-slate-800/70 dark:bg-slate-900/70"
     >
-      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Let's build together!</h2>
+      <h2 class="text-xl font-semibold font-mono text-slate-900 dark:text-white">Lets Talk!</h2>
       <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
         I'm always up for collaborating on security research, challenge design, or automation ideas.
         Reach out on any platform above, I respond fast! :D

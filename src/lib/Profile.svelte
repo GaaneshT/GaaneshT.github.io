@@ -613,7 +613,7 @@
 
     <section id="experience" use:reveal={{ distance: 20, threshold: 0 }} class="space-y-6">
       <div class="flex items-center justify-between gap-4" use:reveal={{ delay: 25, distance: 14, threshold: 0 }}>
-        <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">cat ./experience.txt</h2>
+        <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/experience</h2>
         <!-- <span class="hidden font-mono text-xs tracking-[0.2em] text-slate-400 md:inline">Audit</span> -->
       </div>
 

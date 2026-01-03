@@ -163,6 +163,7 @@
     {
       institution: "National University of Singapore (NUS)",
       degree: "Bachelor of Computing in Information Security (Hons*)",
+      grade: "Honours(Distinction)",
       duration: "2023 - 2025"
     },
     {
@@ -744,6 +745,11 @@
             <div class="pl-4">
               <h3 class="text-lg font-semibold text-slate-900 dark:text-white">{edu.institution}</h3>
               <p class="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">{edu.degree}</p>
+              {#if edu.grade}
+                <p class="mt-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                  Grade: {edu.grade}
+                </p>
+              {/if}
               <p class="mt-3 inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-slate-800/70 dark:bg-slate-900/70 dark:text-slate-300">{edu.duration}</p>
             </div>
           </article>

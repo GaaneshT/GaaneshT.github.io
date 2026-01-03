@@ -4,7 +4,7 @@
 
   const name = "Gaanesh Theivasigamani";
   const title = "InfoSec Undergraduate (NUS) · Security Engineer";
-  const summary = "Offensive security, digital forensics, and automating defenses.";
+  const summary = "I like Offensive security, digital forensics, and automating stuff :D.";
   const aboutMe = `Hey there! I'm Gaanesh, a Cyber Security Enthusiast and Engineer! \n\nFeel free to reach out, I won't byte ;)`;
   const profileImageUrl = `${base}/Me.jpg`;
   const maxVisibleCerts = 8;
@@ -259,7 +259,6 @@
   const stats = [
     { label: "Industry certifications", value: certifications.length.toString() },
     { label: "Security roles & internships", value: experience.length.toString() },
-    { label: "Focus areas", value: focusAreas.length.toString() }
   ];
 
   $: experienceSorted = [...experience].sort((a, b) => (b.sortKey ?? 0) - (a.sortKey ?? 0));
@@ -547,7 +546,7 @@
               {/each}
             </div>
             <div class="flex w-full flex-wrap items-center gap-3 sm:w-auto sm:flex-nowrap">
-              <a
+              <!-- <a
                 class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:from-sky-600 hover:to-indigo-600 dark:from-sky-400 dark:to-indigo-500"
                 href="https://tools.gaanesh.com"
                 target="_blank"
@@ -558,7 +557,7 @@
                   class="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-white/0 via-white/60 to-white/0 opacity-0 transition group-hover:opacity-80 dark:from-slate-900/0 dark:via-slate-900/35 dark:to-slate-900/0 animate-shimmer-ltr"
                 ></span>
                 🛠️ Explore my tools
-              </a>
+              </a> -->
               <a
                 class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-slate-900 px-5 py-2 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
                 href="https://blog.gaanesh.com"

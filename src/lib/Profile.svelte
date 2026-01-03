@@ -234,7 +234,7 @@
       name: "Live Smart Singapore Hackathon (ACRA)",
       duration: "Jul 2020 - Aug 2020",
       description:
-        "Created an automated form processing flow with React and AWS, securing a Top 5 finalist position."
+        "Created an automated form processing flow with React and AWS. One of the top 5 finalists."
     }
   ];
 

@@ -80,12 +80,11 @@
       company: "GovTech Singapore",
       role: "Cybersecurity Intern",
       duration: "Jan-Mar 2026 • 3 months",
-      status: "upcoming",
+      status: "current",
       sortKey: 202603,
       description: [
-        "Incoming Cybersecurity Intern at the Cyber Security Group (CSG).",
+        "Cybersecurity Intern at the Cyber Security Group (CSG).",
         "Project Title: Agentic AI for Cybersecurity Operations.",
-        "Focus on applying agentic AI to enhance SOC efficiency and automate threat detection workflows."
       ],
       logo: `${base}/govtech_logo.gif`
     },

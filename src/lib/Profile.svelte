@@ -786,7 +786,7 @@
     >
       <h2 class="text-xl font-semibold font-mono text-slate-900 dark:text-white">Lets Talk!</h2>
       <p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
-        I'm always up for collaborating on security research, challenge design, or automation ideas.
+        I'm always up for chat!
         Reach out on any platform above, I respond fast! :D
       </p>
     </footer>

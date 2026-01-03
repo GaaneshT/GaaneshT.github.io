@@ -176,7 +176,7 @@
   const certifications = [
         {
       name: "CISSP (Certified Information Systems Security Professional)",
-      logo: `${base}/CISSP_logo.png`,
+      logo: `${base}/cissp_logo.png`,
       date: "Dec 2025 - Dec 2028"
     },
     {

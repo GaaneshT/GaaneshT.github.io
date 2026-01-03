@@ -7,7 +7,7 @@
   const summary = "Offensive security, digital forensics, and automating defenses.";
   const aboutMe = `Hey there! I'm Gaanesh, an Information Security undergraduate at the National University of Singapore. \nI live at the intersection of penetration testing, digital forensics, and building CTF challenges. \nWhether I'm automating detection workflows or tearing through binaries, I'm happiest when learning and sharing battle-tested tradecraft.\nFeel free to reach out – I won't byte ;)`;
   const profileImageUrl = `${base}/Me.jpg`;
-  const maxVisibleCerts = 6;
+  const maxVisibleCerts = 8;
 
   const navLinks = [
     { id: "about", label: "About" },
@@ -174,10 +174,15 @@
   ];
 
   const certifications = [
+        {
+      name: "CISSP (Certified Information Systems Security Professional)",
+      logo: `${base}/CISSP_logo.png`,
+      date: "Dec 2025 - Dec 2028"
+    },
     {
       name: "OSED (OffSec Exploit Developer)",
       logo: `${base}/OSED_logo.svg`,
-      date: "Enrolled • Expected 2025 ¯\\_(ツ)_/¯"
+      date: "Enrolled • Expected 2026 ¯\\_(ツ)_/¯ [Praying I pass]"
     },
     {
       name: "GREM (GIAC Reverse Engineering Malware)",
@@ -613,7 +618,7 @@
 
     <section id="experience" use:reveal={{ distance: 20, threshold: 0 }} class="space-y-6">
       <div class="flex items-center justify-between gap-4" use:reveal={{ delay: 25, distance: 14, threshold: 0 }}>
-        <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/experience</h2>
+        <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">  ~/experience</h2>
         <!-- <span class="hidden font-mono text-xs tracking-[0.2em] text-slate-400 md:inline">Audit</span> -->
       </div>
 
@@ -679,7 +684,7 @@
     </section>
 
     <section id="certifications" use:reveal={{ distance: 32 }} class="space-y-6">
-      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/certs</h2>
+      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">  ~/certs</h2>
       <div class="grid gap-4 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
         {#each visibleCerts as cert, i}
           {@const cardDelay = Math.min(i, 6) * 70}
@@ -710,7 +715,7 @@
     </section>
 
     <section id="projects" use:reveal={{ distance: 32 }} class="space-y-6">
-      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/projects</h2>
+      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">  ~/projects</h2>
       <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
         {#each projects as project, i}
           {@const projectDelay = Math.min(i, 5) * 90}
@@ -728,7 +733,7 @@
     </section>
 
     <section id="education" use:reveal={{ distance: 32 }} class="space-y-6">
-      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">ls -la ~/Education</h2>
+      <h2 class="text-2xl font-semibold font-mono text-slate-900 dark:text-white">  ~/Education</h2>
       <div class="grid gap-6 md:grid-cols-2" use:reveal={{ delay: 60, distance: 24 }}>
         {#each education as edu, i}
           {@const educationDelay = Math.min(i, 5) * 90}

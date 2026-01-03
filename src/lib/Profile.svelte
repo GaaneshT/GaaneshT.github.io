@@ -107,8 +107,8 @@
     {
       company: "National University of Singapore (NUS)",
       role: "Vulnerability Researcher",
-      duration: "Jul 2024 - Present",
-      status: "current",
+      duration: "Jul 2024 - Dec 2025 • 1.5 years",
+      status: "past",
       sortKey: 202509,
       description: [
         "Part of the NUS Vulnerability Disclosure Programme",
@@ -121,7 +121,7 @@
     {
       company: "National University of Singapore (NUS)",
       role: "Undergraduate Teaching Assistant",
-      duration: "Aug-Dec 2024 • 3 months",
+      duration: "Aug-Dec 2024 • 4 months",
       status: "past",
       sortKey: 202412,
       description: [

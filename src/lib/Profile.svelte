@@ -213,7 +213,7 @@
   const projects = [
     {
       name: "tools.gaanesh.com",
-      duration: "2025 · Actively maintained",
+      duration: "2025",
       description:
         "Building a suite of self hosted utilities cause I needed them. All done via browser, no uploads for privacy!",
         

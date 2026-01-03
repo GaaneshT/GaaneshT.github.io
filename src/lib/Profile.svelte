@@ -5,7 +5,7 @@
   const name = "Gaanesh Theivasigamani";
   const title = "InfoSec Undergraduate (NUS) · Security Engineer";
   const summary = "Offensive security, digital forensics, and automating defenses.";
-  const aboutMe = `Hey there! I'm Gaanesh, an Information Security undergraduate at the National University of Singapore. \nI live at the intersection of penetration testing, digital forensics, and building CTF challenges. \nWhether I'm automating detection workflows or tearing through binaries, I'm happiest when learning and sharing battle-tested tradecraft.\nFeel free to reach out – I won't byte ;)`;
+  const aboutMe = `Hey there! I'm Gaanesh, a Cyber Security Enthusiast and Engineer! \n\nFeel free to reach out – I won't byte ;)`;
   const profileImageUrl = `${base}/Me.jpg`;
   const maxVisibleCerts = 8;
 
@@ -21,16 +21,12 @@
   const focusAreas = [
     {
       title: "Penetration Testing",
-      description: "Hands-on offensive security engagements with a focus on practical exploit paths and impact."
+      description: "Offensive security assessments and vulnerability research."
     },
     {
       title: "Digital Forensics",
-      description: "Incident response, evidence acquisition, and root-cause analysis across hybrid environments."
+      description: "Incident response, evidence acquisition, and root-cause analysis."
     },
-    {
-      title: "Security Automation",
-      description: "Agentic AI, RAG pipelines, and workflow automation to scale cyber operations."
-    }
   ];
 
   const socialLinks = [
@@ -71,7 +67,7 @@
       status: "upcoming",
       sortKey: 202603,
       description: [
-        "Returning Full-time Analyst for the 2026 GIC Professionals Programme (GPP) - Technology Track (Cybersecurity).",
+        "Returning full-time Analyst for the 2026 GIC Professionals Programme (GPP) - Technology Track (Cybersecurity).",
         "Starting March 2026."
       ],
       logo: `${base}/GIC_logo.jpg`

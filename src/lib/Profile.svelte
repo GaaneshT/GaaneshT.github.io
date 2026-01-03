@@ -483,7 +483,7 @@
 
   <nav
     use:reveal={{ delay: 120, distance: 14 }}
-    class={`fixed left-1/2 top-6 z-40 w-[min(92%,960px)] -translate-x-1/2 border border-slate-200/60 bg-white/80 px-5 shadow-xl backdrop-blur-md transition-all transition-colors dark:border-slate-700/60 dark:bg-slate-900/70 ${
+    class={`fixed left-1/2 top-6 z-40 w-[min(96%,1200px)] -translate-x-1/2 border border-slate-200/60 bg-white/80 px-6 shadow-xl backdrop-blur-md transition-all transition-colors dark:border-slate-700/60 dark:bg-slate-900/70 ${
       isNavOpen ? "rounded-3xl py-4" : "rounded-full py-3"
     } md:rounded-full md:py-3`}
   >
@@ -501,7 +501,7 @@
     </div>
 
     <div
-      class={`${isNavOpen ? "mt-4 flex" : "hidden"} flex-col gap-3 md:mt-0 md:flex md:flex-row md:items-center md:justify-center md:gap-6 lg:gap-8`}
+      class={`${isNavOpen ? "mt-4 flex" : "hidden"} flex-col gap-3 md:mt-0 md:flex md:flex-row md:flex-wrap md:items-center md:justify-center md:gap-6 lg:flex-nowrap lg:gap-8`}
     >
       {#each navLinks as link}
         <a
@@ -582,7 +582,7 @@
             {#each stats as stat}
               <div class="rounded-2xl border border-slate-200/70 bg-white/90 p-4 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-700/70 dark:bg-slate-900/70">
                 <p class="text-2xl font-semibold text-slate-900 dark:text-white">{stat.value}</p>
-                <p class="text-[0.65rem] uppercase tracking-[0.1em] text-slate-500 break-words leading-4 dark:text-slate-400 sm:text-xs sm:tracking-[0.25em]">{stat.label}</p>
+                <p class="text-[0.65rem] uppercase tracking-[0.1em] text-slate-500 leading-4 dark:text-slate-400 sm:text-xs sm:tracking-[0.25em]">{stat.label}</p>
               </div>
             {/each}
           </div>

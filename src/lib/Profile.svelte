@@ -5,7 +5,7 @@
   const name = "Gaanesh Theivasigamani";
   const title = "InfoSec Undergraduate (NUS) · Security Engineer";
   const summary = "Offensive security, digital forensics, and automating defenses.";
-  const aboutMe = `Hey there! I'm Gaanesh, a Cyber Security Enthusiast and Engineer! \n\nFeel free to reach out – I won't byte ;)`;
+  const aboutMe = `Hey there! I'm Gaanesh, a Cyber Security Enthusiast and Engineer! \n\nFeel free to reach out, I won't byte ;)`;
   const profileImageUrl = `${base}/Me.jpg`;
   const maxVisibleCerts = 8;
 

@@ -10,7 +10,7 @@
     { out: `${identity.title} · ${identity.location}` },
     { prompt: '$', cmd: 'cat status.txt' },
     { out: identity.subtitle },
-    { prompt: '$', cmd: 'echo $TAGLINE' },
+    { prompt: '$', cmd: 'echo $vision' },
     { out: identity.punchline },
     { prompt: '$', cmd: '_' }
   ];

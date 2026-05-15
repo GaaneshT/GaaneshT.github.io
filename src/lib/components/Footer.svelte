@@ -22,7 +22,7 @@
       <p class="font-mono text-xs uppercase tracking-[0.25em] text-neon-cyan">// signal</p>
       <h2 class="mt-2 text-2xl font-semibold text-ink-900 dark:text-white sm:text-3xl">Let’s talk.</h2>
       <p class="mt-3 max-w-md text-pretty text-sm text-ink-600 dark:text-ghost-300">
-        Open to security work, research collabs, or just trading thoughts. I respond fast — pick the channel that suits you.
+        Open to all things security! Just let me know~.
       </p>
 
       <div class="mt-5 flex flex-wrap items-center gap-2">
@@ -49,9 +49,9 @@
 
     <div class="rounded-xl border border-ghost-200/60 bg-ghost-50/80 p-4 font-mono text-[11px] text-ghost-500 dark:border-ink-600/60 dark:bg-ink-950/70 dark:text-ghost-400">
       <p><span class="text-neon-green">{identity.handle}</span><span class="text-ghost-400">@</span><span class="text-neon-violet">{identity.host}</span><span class="text-ghost-400">:~$</span> <span class="text-ink-900 dark:text-ghost-100">uptime</span></p>
-      <p class="mt-1">based in <span class="text-neon-cyan">{identity.location}</span>. response time: usually within hours.</p>
+      <p class="mt-1">based in <span class="text-neon-cyan">{identity.location}</span></p>
       <p class="mt-3"><span class="text-neon-green">{identity.handle}</span><span class="text-ghost-400">@</span><span class="text-neon-violet">{identity.host}</span><span class="text-ghost-400">:~$</span> <span class="text-ink-900 dark:text-ghost-100">echo "© {year}"</span></p>
-      <p class="mt-1">© {year} {identity.name}. Built with SvelteKit. <span class="text-neon-cyan">▌</span></p>
+      <p class="mt-1"> {year} {identity.name} <span class="text-neon-cyan">▌</span></p>
     </div>
   </div>
 </footer>

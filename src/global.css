@@ -2,3 +2,141 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+/* --- Fonts (system fallback used if Google Fonts unavailable) --- */
+@layer base {
+  :root {
+    color-scheme: dark light;
+    --grid-line: rgba(103, 232, 249, 0.06);
+    --grid-strong: rgba(103, 232, 249, 0.12);
+    --noise: rgba(255, 255, 255, 0.015);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html.dark {
+    --grid-line: rgba(103, 232, 249, 0.07);
+    --grid-strong: rgba(192, 132, 252, 0.10);
+  }
+
+  body {
+    @apply font-sans bg-ghost-50 text-ink-900 transition-colors duration-500;
+  }
+
+  body.dark,
+  html.dark body {
+    @apply bg-ink-950 text-ghost-100;
+  }
+
+  /* Stronger focus rings everywhere — a11y win */
+  *:focus-visible {
+    outline: 2px solid theme('colors.neon.cyan');
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: rgba(103, 232, 249, 0.25);
+    color: inherit;
+  }
+}
+
+@layer components {
+  /* Grid + scanline backdrop */
+  .fx-grid {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 75%);
+  }
+
+  .fx-scanlines {
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  .fx-noise {
+    background-image: radial-gradient(var(--noise) 1px, transparent 1px);
+    background-size: 3px 3px;
+    opacity: 0.6;
+  }
+
+  /* Terminal "card" surface */
+  .terminal {
+    @apply rounded-2xl border border-ink-600/70 bg-ink-900/70 backdrop-blur-xl shadow-inset-line;
+  }
+
+  .terminal-light {
+    @apply rounded-2xl border border-ghost-200 bg-white/85 backdrop-blur-xl;
+  }
+
+  /* Section header — looks like a shell prompt */
+  .prompt-heading {
+    @apply font-mono text-sm font-semibold tracking-wide text-neon-cyan;
+  }
+  .prompt-heading .user { @apply text-neon-green; }
+  .prompt-heading .at   { @apply text-ghost-400; }
+  .prompt-heading .host { @apply text-neon-violet; }
+  .prompt-heading .path { @apply text-neon-cyan; }
+  .prompt-heading .sign { @apply text-ghost-400; }
+  .prompt-heading .cmd  { @apply text-ghost-100; }
+
+  /* Inline cursor for the typing hero */
+  .cursor::after {
+    content: '▌';
+    display: inline-block;
+    margin-left: 2px;
+    color: theme('colors.neon.cyan');
+    animation: blink 1.05s steps(1) infinite;
+  }
+
+  /* Subtle "live" pulse dot */
+  .dot-live {
+    @apply relative inline-flex h-2 w-2 rounded-full bg-neon-green;
+  }
+  .dot-live::after {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-neon-green/60;
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* Kbd key chip */
+  .kbd {
+    @apply inline-flex items-center justify-center rounded-md border border-ink-600 bg-ink-800/70 px-1.5 py-0.5 font-mono text-[10px] font-medium text-ghost-300 shadow-inset-line;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  .glow-text {
+    text-shadow: 0 0 18px rgba(103, 232, 249, 0.45);
+  }
+
+  /* For the hero terminal — keeps a fixed-height code box from jumping */
+  .min-h-terminal { min-height: 14rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

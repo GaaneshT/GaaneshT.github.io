@@ -1,9 +1,79 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#060814" />
+		<meta name="color-scheme" content="dark light" />
+
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<link rel="canonical" href="https://gaanesh.com/" />
+
+		<title>Gaanesh Theivasigamani — Security Engineer</title>
+		<meta name="description" content="Security engineer & researcher. Penetration testing, digital forensics, and automation. NUS InfoSec · GovTech CSG · joining GIC Mar 2026." />
+		<meta name="author" content="Gaanesh Theivasigamani" />
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://gaanesh.com/" />
+		<meta property="og:title" content="Gaanesh Theivasigamani — Security Engineer" />
+		<meta property="og:description" content="Security engineer & researcher. Penetration testing, digital forensics, and automation that retires the boring parts." />
+		<meta property="og:image" content="https://gaanesh.com/Me.jpg" />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@PlantSecurity" />
+		<meta name="twitter:title" content="Gaanesh Theivasigamani — Security Engineer" />
+		<meta name="twitter:description" content="Penetration testing, digital forensics, and the automations that keep them fixed." />
+		<meta name="twitter:image" content="https://gaanesh.com/Me.jpg" />
+
+		<!-- Fonts: JetBrains Mono + Inter. Falls back to system mono/sans if blocked. -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- JSON-LD: Person schema for SEO -->
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Gaanesh Theivasigamani",
+				"url": "https://gaanesh.com",
+				"image": "https://gaanesh.com/Me.jpg",
+				"jobTitle": "Security Engineer",
+				"alumniOf": {
+					"@type": "CollegeOrUniversity",
+					"name": "National University of Singapore"
+				},
+				"sameAs": [
+					"https://github.com/GaaneshT",
+					"https://www.linkedin.com/in/gaanesht/",
+					"https://x.com/PlantSecurity",
+					"https://blog.gaanesh.com",
+					"https://tools.gaanesh.com"
+				],
+				"knowsAbout": ["Penetration Testing", "Digital Forensics", "Reverse Engineering", "Security Automation", "Cloud Security"]
+			}
+		</script>
+
+		<script>
+			(function () {
+				try {
+					var saved = localStorage.getItem('theme');
+					var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+					var dark = saved ? saved === 'dark' : prefersDark;
+					if (!dark) {
+						document.documentElement.classList.remove('dark');
+					} else {
+						document.documentElement.classList.add('dark');
+					}
+				} catch (_) {}
+			})();
+		</script>
+
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

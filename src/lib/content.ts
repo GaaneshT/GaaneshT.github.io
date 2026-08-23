@@ -1,100 +1,155 @@
+// Single source of truth for every section rendered on the page.
+
 import { base } from '$app/paths';
 
-export type ExpStatus = 'upcoming' | 'current' | 'past';
-
 export type Experience = {
-  company: string;
   role: string;
-  duration: string;
-  status: ExpStatus;
-  sortKey: number;
-  description: string[];
-  logo: string;
+  org: string;
+  period: string;
+  bullets: string[];
+  current?: boolean;
+  featured?: boolean;
+  note?: string;
+};
+
+export type CaseStudy = {
+  title: string;
+  where: string;
+  when: string;
   url?: string;
-};
-
-export type Education = {
-  institution: string;
-  degree: string;
-  grade?: string;
-  duration: string;
-};
-
-export type Certification = {
-  name: string;
-  short: string;
-  logo: string;
-  date: string;
+  context: string;
+  did: string[];
+  metrics: { value: string; label: string }[];
+  note?: string;
 };
 
 export type Project = {
   name: string;
-  duration: string;
-  description: string;
+  period: string;
   url?: string;
-  tech?: string[];
+  description: string;
+  tags: string[];
 };
 
-export type Testimonial = {
+export type Education = {
+  school: string;
+  degree: string;
+  note?: string;
+  period: string;
+};
+
+export type Certification = {
+  abbr: string;
   name: string;
-  position: string;
-  text: string;
-  imageUrl?: string;
-  date?: string;
-  relationship?: string;
-};
-
-export type Social = {
-  label: string;
-  icon: string;
+  period: string;
   url: string;
 };
 
+export type Link = { label: string; url: string; external?: boolean };
+
 // ---------------------------------------------------------------------------
-// Identity & voice
+// Identity
 // ---------------------------------------------------------------------------
 export const identity = {
   name: 'Gaanesh Theivasigamani',
-  shortName: 'Gaanesh',
-  handle: 'gaanesh',
-  host: 'infosec',
-  title: 'Security Engineer & Researcher',
-  subtitle: 'NUS Information Security · Analyst @ GIC',
-  // One-line hook for the hero
-  punchline: 'Always learning, always building, always exploring.',
-  // whoami output — short, factual, in their voice
-  about: [
-    "Hey there! I'm Gaanesh, a Cyber Security Enthusiast and Engineer at GIC!",
-    "Feel free to reach out, I won't byte :)",
-  ],
-  email: 'gaaneshtheivasigamani@gmail.com',
-  location: 'Singapore'
+  role: 'Security Engineer',
+  location: 'Singapore',
+  email: 'gaanesh@u.nus.edu',
+  portrait: `${base}/Me.jpg`,
+  hello:
+    "Hi, I'm Gaanesh. I'm a security engineer in Singapore who breaks things on purpose, then figures out what happened.",
+  sub: {
+    lead: 'Offensive security and digital forensics, plus the automation nobody else wants to write. Currently an ',
+    strong: 'Analyst at GIC',
+    tail: " on the cybersecurity technology track. Before that, agentic AI for security operations at GovTech's Cyber Security Group."
+  }
 };
 
-export const profileImage = `${base}/Me.jpg`;
+export const links = {
+  github: 'https://github.com/GaaneshT',
+  linkedin: 'https://www.linkedin.com/in/gaanesht/',
+  twitter: 'https://x.com/PlantSecurity',
+  blog: 'https://blog.gaanesh.com',
+  tools: 'https://tools.gaanesh.com',
+  properties: 'https://properties.gaanesh.com'
+};
 
-export const navLinks = [
-  { id: 'about',          label: 'about' },
-  { id: 'experience',     label: 'experience' },
-  { id: 'writing',        label: 'writing' },
-  { id: 'certifications', label: 'certs' },
-  { id: 'projects',       label: 'projects' },
-  { id: 'education',      label: 'education' },
-  { id: 'testimonials',   label: 'voices' }
+// Top bar. Anchors stay on this page; the rest point at the subdomains.
+export const navLinks: Link[] = [
+  { label: 'Work', url: '#selected' },
+  { label: 'Projects', url: '#projects' },
+  { label: 'Tools', url: links.tools, external: true },
+  { label: 'Writing', url: links.blog, external: true },
+  { label: 'Contact', url: '#contact' }
 ];
 
-export const socialLinks: Social[] = [
-  { label: 'GitHub',   icon: 'fa-brands fa-github',     url: 'https://github.com/GaaneshT' },
-  { label: 'LinkedIn', icon: 'fa-brands fa-linkedin',   url: 'https://www.linkedin.com/in/gaanesht/' },
-  { label: 'X',        icon: 'fa-brands fa-x-twitter',  url: 'https://x.com/PlantSecurity' },
-  { label: 'Blog',     icon: 'fa-solid fa-feather',     url: 'https://blog.gaanesh.com' },
-  { label: 'Tools',    icon: 'fa-solid fa-screwdriver-wrench', url: 'https://tools.gaanesh.com' }
+// Under the intro paragraph.
+export const leadLinks: Link[] = [
+  { label: 'GitHub', url: links.github },
+  { label: 'LinkedIn', url: links.linkedin },
+  { label: 'Blog', url: links.blog },
+  { label: 'Tools', url: links.tools },
+  { label: 'Properties', url: links.properties }
 ];
 
-export const focusAreas = [
-  { title: 'Offensive Security',   description: 'Pen testing, vuln research, exploit chains.' },
-  { title: 'Digital Forensics',    description: 'IR, evidence acquisition, root-cause analysis.' },
-  { title: 'AI for Sec Ops',       description: 'Build agentic systems for cybersecurity operations.' }
+// Footer.
+export const footerLinks: Link[] = [
+  { label: 'GitHub', url: links.github },
+  { label: 'LinkedIn', url: links.linkedin },
+  { label: 'Twitter', url: links.twitter },
+  { label: 'Blog', url: links.blog },
+  { label: 'Tools', url: links.tools },
+  { label: 'Properties', url: links.properties }
+];
+
+export const institutions = ['NUS', 'GIC', 'GovTech', 'CSA', 'HTX'];
+
+// ---------------------------------------------------------------------------
+// Selected work
+// ---------------------------------------------------------------------------
+export const cases: CaseStudy[] = [
+  {
+    title: 'Automating the write-up nobody wants to do',
+    where: 'GovTech · Cyber Security Group',
+    when: '2026',
+    context:
+      'Every DFIR investigation ends in a written report, and producing it is slow manual work that happens when an analyst is already tired. The open question was how much of an investigation an autonomous agent could reasonably carry.',
+    did: [
+      'Built a self-reporting structure that drafts investigation write-ups from findings instead of leaving it to a human at the end.',
+      'Researched autonomous agents for DFIR investigations: what can be delegated, where the reasoning breaks down, and which steps still need a person.'
+    ],
+    metrics: [],
+    note: 'Internship work inside GovTech CSG. Implementation details stay internal.'
+  },
+  {
+    title: 'Answering security questions in seconds, not hours',
+    where: 'GIC',
+    when: '2025',
+    context:
+      'Routine security questions meant a person digging through scattered internal documentation, and cloud security requests sat in a five-day queue.',
+    did: [
+      'Built an internal RAG chatbot on an agentic architecture, so the system retrieves and reasons rather than keyword-matching.',
+      'Automated the manual cloud security workflows behind the queue.',
+      'Wired security checks into CI/CD through API integrations so problems surface at commit time.'
+    ],
+    metrics: [
+      { value: '~1 hr to ~20 s', label: 'average response time' },
+      { value: '5 days to ~2 min', label: 'cloud security SLA' }
+    ]
+  },
+  {
+    title: 'Security tools that never send your data anywhere',
+    where: 'tools.gaanesh.com',
+    when: '2025 to now',
+    url: links.tools,
+    context:
+      'Most online utilities for security work ask you to upload the very thing you are trying to keep private. I kept needing these tools and kept not trusting where the data went.',
+    did: [
+      'Built a suite of utilities that run entirely in the browser: no uploads, no server, nothing leaves the tab.',
+      'Self-hosted and open to anyone, so the privacy claim can be checked rather than taken on trust.'
+    ],
+    metrics: []
+  }
 ];
 
 // ---------------------------------------------------------------------------
@@ -102,127 +157,74 @@ export const focusAreas = [
 // ---------------------------------------------------------------------------
 export const experience: Experience[] = [
   {
-    company: 'GIC',
-    role: 'Analyst · GPP Technology Track (Cybersecurity)',
-    duration: 'Starts Mar 2026',
-    status: 'current',
-    sortKey: 202603,
-    description: [
-      'Returning full-time as an Analyst on the 2026 GPP Technology Track (Cybersecurity).'
-    ],
-    logo: `${base}/GIC_logo.jpg`,
-    url: 'https://www.gic.com.sg'
+    role: 'Analyst',
+    org: 'GIC',
+    period: 'Mar 2026 – present',
+    current: true,
+    featured: true,
+    note: 'Returned full-time after interning here in 2025',
+    bullets: ['Cybersecurity analyst on the 2026 GPP Technology Track.']
   },
   {
-    company: 'GovTech Singapore',
-    role: 'Cybersecurity Intern · Cyber Security Group (CSG)',
-    duration: 'Jan – Mar 2026 · 3 months',
-    status: 'past',
-    sortKey: 202603,
-    description: [
-      'Project: agentic AI for cybersecurity operations — autonomous triage, investigation, and response loops.'
-    ],
-    logo: `${base}/govtech_logo.gif`,
-    url: 'https://www.tech.gov.sg'
-  },
-  {
-    company: 'GIC',
     role: 'Cybersecurity Intern',
-    duration: 'May – Aug 2025 · 4 months',
-    status: 'past',
-    sortKey: 202508,
-    description: [
-      'Built an internal RAG chatbot with an agentic architecture — average response time dropped from ~1 hour to ~20 seconds.',
+    org: 'GovTech Singapore',
+    period: 'Jan – Mar 2026 · 3 months',
+    featured: true,
+    bullets: [
+      'Agentic AI for cybersecurity operations: built a self-reporting structure for investigation write-ups, and researched autonomous agents for DFIR.'
+    ]
+  },
+  {
+    role: 'Vulnerability Researcher',
+    org: 'National University of Singapore',
+    period: 'Jul 2024 – Dec 2025 · 1.5 years',
+    featured: true,
+    bullets: [
+      'Part of the NUS Vulnerability Disclosure Programme, a year-long NSWS contract.',
+      'Tested university systems and reported through the disclosure process.'
+    ]
+  },
+  {
+    role: 'Cybersecurity Intern',
+    org: 'GIC',
+    period: 'May – Aug 2025 · 4 months',
+    featured: true,
+    bullets: [
+      'Built an internal RAG chatbot with an agentic architecture. Average response time dropped from ~1 hour to ~20 seconds.',
       'Wrote automation that retired manual workflows, cutting SLA from 5 days to ~2 minutes on key cloud security processes.',
-      'Embedded security checks into CI/CD via API integrations.',
-      'Worked across Wiz, Snyk, and F5 for vulnerability management.',
-      'Provisioned cloud infra with AWS + IaC.',
-      'Awarded a return offer to the GIC Professionals Programme.'
-    ],
-    logo: `${base}/GIC_logo.jpg`
+      'Embedded security checks into CI/CD via API integrations.'
+    ]
   },
   {
-    company: 'National University of Singapore',
-    role: 'Vulnerability Researcher · NUS VDP',
-    duration: 'Jul 2024 – Dec 2025 · 1.5 years',
-    status: 'past',
-    sortKey: 202509,
-    description: [
-      'Part of the NUS Vulnerability Disclosure Programme — year-long NSWS contract.',
-      'Conducted in-depth pen testing across NUS infrastructure, identifying and reporting security vulnerabilities.',
-      'Collaborated with NUS IT to land secure remediations under NDA.'
-    ],
-    logo: `${base}/NUS_logo.png`
-  },
-  {
-    company: 'National University of Singapore',
     role: 'Undergraduate TA · CS2107 Intro to Information Security',
-    duration: 'Aug – Dec 2024 · 4 months',
-    status: 'past',
-    sortKey: 202412,
-    description: [
+    org: 'National University of Singapore',
+    period: 'Aug – Dec 2024 · 4 months',
+    bullets: [
       'Designed hands-on challenges spanning cryptography, web security, forensics, and reverse engineering.',
       'Ran interactive sessions that improved student engagement and learning outcomes.'
-    ],
-    logo: `${base}/NUS_logo.png`
+    ]
   },
   {
-    company: 'Home Team Science and Technology Agency (HTX)',
     role: 'Cyber AI Analytics Intern',
-    duration: 'May – Aug 2024 · 4 months',
-    status: 'past',
-    sortKey: 202408,
-    description: [
+    org: 'Home Team Science and Technology Agency (HTX)',
+    period: 'May – Aug 2024 · 4 months',
+    bullets: [
       'Vulnerability discovery across multiple applications.',
       'Configured and deployed an ELK stack for analysis and visualisation.',
-      'Used Burp Suite for deep API analysis — surfaced hidden functionality and vulnerabilities.'
-    ],
-    logo: `${base}/HTX_logo.png`
+      'Used Burp Suite for deep API analysis, surfacing hidden functionality and vulnerabilities.'
+    ]
   },
   {
-    company: 'Cyber Security Agency of Singapore (CSA)',
     role: 'Cybersecurity Specialist',
-    duration: 'Aug 2021 – Aug 2023 · 2 years',
-    status: 'past',
-    sortKey: 202308,
-    description: [
+    org: 'Cyber Security Agency of Singapore (CSA)',
+    period: 'Aug 2021 – Aug 2023 · 2 years',
+    featured: true,
+    bullets: [
       'Acquired forensic evidence (system artefacts, logs) to support root-cause analysis during cyber incidents.',
       'Performed digital forensics across files, network, system logs, and memory captures to determine attack vectors.',
       'Liaised with CII providers and victim entities to coordinate incident response and mitigation.'
-    ],
-    logo: `${base}/CSA_logo.jpg`
+    ]
   }
-];
-
-// ---------------------------------------------------------------------------
-// Education
-// ---------------------------------------------------------------------------
-export const education: Education[] = [
-  {
-    institution: 'National University of Singapore',
-    degree: 'B. Computing in Information Security (Hons. with Distinction)',
-    grade: 'Honours · Distinction',
-    duration: '2023 – 2025'
-  },
-  {
-    institution: 'Singapore Polytechnic',
-    degree: 'Diploma in Aerospace Electronics & Diploma+ in Aviation Management',
-    duration: '2017 – 2020'
-  }
-];
-
-// ---------------------------------------------------------------------------
-// Certifications
-// ---------------------------------------------------------------------------
-export const certifications: Certification[] = [
-  { name: 'CISSP · Certified Information Systems Security Professional', short: 'CISSP', logo: `${base}/cissp_logo.png`, date: 'Dec 2025 – Dec 2028' },
-  { name: 'OSAI · OffSec AI Red Teamer',                                 short: 'OSAI',  logo: `${base}/OSAI_logo.svg`,  date: 'Enrolled · Expected 2026' },
-  { name: 'GREM · GIAC Reverse Engineering Malware',                     short: 'GREM',  logo: `${base}/GREM.png`,       date: 'Nov 2024 – Nov 2028' },
-  { name: 'OSWE · OffSec Web Expert',                                    short: 'OSWE',  logo: `${base}/OSWE_logo.svg`,  date: 'Issued Jul 2024' },
-  { name: 'GCFA · GIAC Certified Forensic Analyst',                      short: 'GCFA',  logo: `${base}/GCFA.png`,       date: 'Jun 2024 – Jun 2028' },
-  { name: 'CEH · Certified Ethical Hacker',                              short: 'CEH',   logo: `${base}/CEH.png`,        date: 'Apr 2024 – Apr 2027' },
-  { name: 'OSCP · OffSec Certified Professional',                        short: 'OSCP',  logo: `${base}/OSCP_logo.svg`,  date: 'Issued Mar 2024' },
-  { name: 'CCDL2 · Certified CyberDefender Level 2',                     short: 'CCDL2',  logo: `${base}/CCDL2_logo.png`,  date: 'May 2026 - May 2030' }
 ];
 
 // ---------------------------------------------------------------------------
@@ -231,60 +233,84 @@ export const certifications: Certification[] = [
 export const projects: Project[] = [
   {
     name: 'tools.gaanesh.com',
-    duration: '2025 — ongoing',
-    description: 'A suite of self-hosted utilities I kept needing. Runs entirely in your browser — no uploads, no server, nothing leaves the tab.',
-    url: 'https://tools.gaanesh.com',
-    tech: ['Browser-only', 'No uploads', 'Privacy-first']
+    period: '2025 to now',
+    url: links.tools,
+    description:
+      'A suite of self-hosted utilities I kept needing. Runs entirely in your browser. No uploads, no server, nothing leaves the tab.',
+    tags: ['Browser-only', 'No uploads', 'Privacy-first']
   },
   {
-    name: 'IR Dojo — CTF for everyone',
-    duration: 'Dec 2021 – Mar 2022',
+    name: 'properties.gaanesh.com',
+    period: '2026 to now',
+    url: links.properties,
+    description:
+      'A private viewer over Singapore URA resale transactions. A monthly job pulls from the URA API and bakes derived JSON, so the browser only ever reads pre-computed files and never calls the API itself.',
+    tags: ['SvelteKit', 'Data pipeline', 'No listings']
+  },
+  {
+    name: 'IR Dojo, a CTF for everyone',
+    period: 'Dec 2021 – Mar 2022',
     description: 'A CTF focused on digital forensics and malware analysis. Won the MCI Idea! Award.',
-    tech: ['DFIR', 'Education']
+    tags: ['DFIR', 'Education']
   },
   {
     name: 'BuildOn Singapore Hackathon',
-    duration: 'Aug 2020',
+    period: 'Aug 2020',
     description: 'A bed-sorting algorithm built on React + AWS for hospital capacity. Reached the semi-finals.',
-    tech: ['React', 'AWS']
+    tags: ['React', 'AWS']
   },
   {
     name: 'Live Smart Singapore Hackathon (ACRA)',
-    duration: 'Jul – Aug 2020',
+    period: 'Jul – Aug 2020',
     description: 'Automated form-processing pipeline on React + AWS. Top-5 finalist.',
-    tech: ['React', 'AWS', 'Automation']
+    tags: ['React', 'AWS', 'Automation']
   }
 ];
 
 // ---------------------------------------------------------------------------
-// Testimonials
+// Education
 // ---------------------------------------------------------------------------
-export const testimonials: Testimonial[] = [
+export const education: Education[] = [
   {
-    name: 'Lee Jia Quan (Benny)',
-    position: 'Computer Science · NUS',
-    text:
-      "Working alongside Gaanesh has been a truly inspiring experience. His enthusiasm and curiosity have consistently fueled my own motivation to tackle new and challenging projects. Gaanesh is always eager to engage in meaningful discussions, particularly about trending advancements in cybertech and their implications on our work.\n\nWhat stands out most about Gaanesh is his unwavering dedication and goal-oriented mindset. When he commits to a project, he ensures that it is not only completed on time but also meets his high personal standards. His openness to exchanging ideas and his focus on achieving results within the set timeline create a productive and enjoyable working environment.",
-    imageUrl: `${base}/Benny.jpg`,
-    date: '04 Jan 2025',
-    relationship: 'Worked together at NUS'
+    school: 'National University of Singapore',
+    degree: 'B. Computing in Information Security',
+    note: 'Honours with Distinction',
+    period: '2023 – 2025'
   },
   {
-    name: 'Guo GangQuan',
-    position: 'Information Security · NUS',
-    text:
-      "Gaanesh is an exceptional team player who consistently motivates the team to exceed their potential. His strong communication skills and ability to collaborate effectively with diverse individuals make him a valuable asset in any group setting. With a solid academic background and a keen interest in cybersecurity, Gaanesh brings both knowledge and passion to his work. His problem-solving skills are remarkable — he is quick to suggest alternative solutions when plans don't unfold as expected, ensuring progress and success in challenging situations.",
-    imageUrl: `${base}/GQ.jpg`,
-    date: '04 Jan 2025',
-    relationship: 'Worked together at NUS'
+    school: 'Singapore Polytechnic',
+    degree: 'Diploma in Aerospace Electronics, Diploma+ in Aviation Management',
+    period: '2017 – 2020'
   }
 ];
 
 // ---------------------------------------------------------------------------
-// Stats — derived
+// Certifications
 // ---------------------------------------------------------------------------
-export const stats = [
-  { label: 'industry certifications', value: certifications.length },
-  { label: 'security roles & internships', value: experience.length },
-  { label: 'years in the field', value: '3+' }
+const CERT_URL = 'https://www.linkedin.com/in/gaanesht/details/certifications/';
+
+export const certifications: Certification[] = [
+  { abbr: 'CISSP', name: 'Certified Information Systems Security Professional', period: 'Dec 2025 – Dec 2028', url: CERT_URL },
+  { abbr: 'OSCP', name: 'OffSec Certified Professional', period: 'Issued Mar 2024', url: CERT_URL },
+  { abbr: 'OSWE', name: 'OffSec Web Expert', period: 'Issued Jul 2024', url: CERT_URL },
+  { abbr: 'GREM', name: 'GIAC Reverse Engineering Malware', period: 'Nov 2024 – Nov 2028', url: CERT_URL },
+  { abbr: 'GCFA', name: 'GIAC Certified Forensic Analyst', period: 'Jun 2024 – Jun 2028', url: CERT_URL },
+  { abbr: 'CEH', name: 'Certified Ethical Hacker', period: 'Apr 2024 – Apr 2027', url: CERT_URL },
+  { abbr: 'CCDL2', name: 'Certified CyberDefender Level 2', period: 'May 2026 – May 2030', url: CERT_URL },
+  { abbr: 'OSAI', name: 'OffSec AI Red Teamer', period: 'Issued 2026', url: CERT_URL }
 ];
+
+export const earnedCerts = certifications.filter((c) => !/^enrolled/i.test(c.period));
+export const pendingCerts = certifications.filter((c) => /^enrolled/i.test(c.period));
+
+// ---------------------------------------------------------------------------
+// Section copy
+// ---------------------------------------------------------------------------
+export const copy = {
+  selectedWork: 'Three pieces that show the actual job. One is live and you can click it.',
+  // The "What I do" paragraph carries inline <b> emphasis, so its markup lives
+  // in Skills.svelte.
+  contactLine:
+    'Open to security work, interesting problems, or a conversation about breaking things. I usually reply within a day.',
+  footer: `© ${new Date().getFullYear()} ${identity.name} · ${identity.location}`
+};

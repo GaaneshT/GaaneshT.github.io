@@ -296,7 +296,6 @@ export const pendingCerts = certifications.filter((c) => /^enrolled/i.test(c.per
 // Section copy
 // ---------------------------------------------------------------------------
 export const copy = {
-  selectedWork: 'Three pieces that show the actual job. One is live and you can click it.',
   // The "What I do" paragraph carries inline <b> emphasis, so its markup lives
   // in Skills.svelte.
   contactLine:

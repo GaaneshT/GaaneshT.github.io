@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { cases, copy } from '$lib/content';
+  import { cases } from '$lib/content';
   import { reveal } from '$lib/actions/reveal';
 </script>
 
 <section id="selected" class="big">
   <h2>Selected work</h2>
-  <p class="say">{copy.selectedWork}</p>
 
   <div class="cases">
     {#each cases as item}

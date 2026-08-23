@@ -151,7 +151,6 @@ h2 {
   text-transform: none;
   margin-bottom: 10px;
 }
-.big .say { font-size: 17px; color: var(--dim); max-width: 34em; margin-bottom: 8px; }
 
 .prose {
   font-size: clamp(17px, 1.65vw, 19.5px);

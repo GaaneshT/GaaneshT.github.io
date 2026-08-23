@@ -70,8 +70,7 @@ export const links = {
   linkedin: 'https://www.linkedin.com/in/gaanesht/',
   twitter: 'https://x.com/PlantSecurity',
   blog: 'https://blog.gaanesh.com',
-  tools: 'https://tools.gaanesh.com',
-  properties: 'https://properties.gaanesh.com'
+  tools: 'https://tools.gaanesh.com'
 };
 
 // Top bar. Anchors stay on this page; the rest point at the subdomains.
@@ -88,8 +87,7 @@ export const leadLinks: Link[] = [
   { label: 'GitHub', url: links.github },
   { label: 'LinkedIn', url: links.linkedin },
   { label: 'Blog', url: links.blog },
-  { label: 'Tools', url: links.tools },
-  { label: 'Properties', url: links.properties }
+  { label: 'Tools', url: links.tools }
 ];
 
 // Footer.
@@ -98,8 +96,7 @@ export const footerLinks: Link[] = [
   { label: 'LinkedIn', url: links.linkedin },
   { label: 'Twitter', url: links.twitter },
   { label: 'Blog', url: links.blog },
-  { label: 'Tools', url: links.tools },
-  { label: 'Properties', url: links.properties }
+  { label: 'Tools', url: links.tools }
 ];
 
 export const institutions = ['NUS', 'GIC', 'GovTech', 'CSA', 'HTX'];
@@ -238,14 +235,6 @@ export const projects: Project[] = [
     description:
       'A suite of self-hosted utilities I kept needing. Runs entirely in your browser. No uploads, no server, nothing leaves the tab.',
     tags: ['Browser-only', 'No uploads', 'Privacy-first']
-  },
-  {
-    name: 'properties.gaanesh.com',
-    period: '2026 to now',
-    url: links.properties,
-    description:
-      'A private viewer over Singapore URA resale transactions. A monthly job pulls from the URA API and bakes derived JSON, so the browser only ever reads pre-computed files and never calls the API itself.',
-    tags: ['SvelteKit', 'Data pipeline', 'No listings']
   },
   {
     name: 'IR Dojo, a CTF for everyone',

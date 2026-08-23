@@ -56,6 +56,11 @@ export const identity = {
   location: 'Singapore',
   email: 'gaanesh@u.nus.edu',
   portrait: `${base}/Me.jpg`,
+  // Displayed at 104px. The full portrait is 282 KB and is kept only for the
+  // Open Graph card, which needs a large image.
+  avatar: `${base}/Me-avatar.jpg`,
+  // Set to a path under static/ once a CV exists; the button renders from this.
+  cv: '',
   hello:
     "Hi, I'm Gaanesh. I'm a security engineer in Singapore who breaks things on purpose, then figures out what happened.",
   sub: {

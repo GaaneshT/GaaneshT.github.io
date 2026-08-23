@@ -19,15 +19,17 @@
 
 <div class="wrap">
   <Bar />
-  <Lead />
-  <Institutions />
-  <Cases />
-  <Experience />
-  <Skills />
-  <Projects />
-  <Writing />
-  <Education />
-  <Contact />
+  <main>
+    <Lead />
+    <Institutions />
+    <Cases />
+    <Experience />
+    <Skills />
+    <Projects />
+    <Writing />
+    <Education />
+    <Contact />
+  </main>
 </div>
 
 <Footer />

@@ -3,7 +3,7 @@
 </script>
 
 <div class="lead" id="top">
-  <p class="hello">{identity.hello}</p>
+  <h1 class="hello">{identity.hello}</h1>
 
   <p class="sub">
     {identity.sub.lead}<b>{identity.sub.strong}</b>{identity.sub.tail}

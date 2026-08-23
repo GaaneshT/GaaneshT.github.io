@@ -24,12 +24,12 @@ export const POSTS_MANIFEST = `${BLOG_ORIGIN}/posts.json`;
 export const fallbackPosts: Post[] = [
   {
     slug: 'ai-red-teaming',
-    title: 'Did AI Actually Make Me Better at Red Teaming?',
+    title: 'OSAI: Did AI Actually Make Me Better at Red Teaming?',
     excerpt:
-      'My experience using AI assistants during a multi-host red-team exam, where they helped most when I was stuck but never replaced operator judgment.',
+      'Notes from the OffSec AI Red Teamer (OSAI) exam: where AI assistants helped most when I was stuck, and where they never replaced operator judgment.',
     date: '2026-08-07',
     readingTime: 10,
-    categories: ['AI Security', 'Red Teaming'],
+    categories: ['OSAI', 'AI Security'],
     url: `${BLOG_ORIGIN}/ai-red-teaming/`
   },
   {

@@ -87,14 +87,6 @@ export const navLinks: Link[] = [
   { label: 'Contact', url: '#contact' }
 ];
 
-// Under the intro paragraph.
-export const leadLinks: Link[] = [
-  { label: 'GitHub', url: links.github },
-  { label: 'LinkedIn', url: links.linkedin },
-  { label: 'Blog', url: links.blog },
-  { label: 'Tools', url: links.tools }
-];
-
 // Footer.
 export const footerLinks: Link[] = [
   { label: 'GitHub', url: links.github },
@@ -103,8 +95,6 @@ export const footerLinks: Link[] = [
   { label: 'Blog', url: links.blog },
   { label: 'Tools', url: links.tools }
 ];
-
-export const institutions = ['NUS', 'GIC', 'GovTech', 'CSA', 'HTX'];
 
 // ---------------------------------------------------------------------------
 // Selected work
@@ -230,17 +220,9 @@ export const experience: Experience[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Projects
+// Projects (tools.gaanesh.com lives under Selected work, not here)
 // ---------------------------------------------------------------------------
 export const projects: Project[] = [
-  {
-    name: 'tools.gaanesh.com',
-    period: '2025 to now',
-    url: links.tools,
-    description:
-      'A suite of self-hosted utilities I kept needing. Runs entirely in your browser. No uploads, no server, nothing leaves the tab.',
-    tags: ['Browser-only', 'No uploads', 'Privacy-first']
-  },
   {
     name: 'IR Dojo, a CTF for everyone',
     period: 'Dec 2021 – Mar 2022',

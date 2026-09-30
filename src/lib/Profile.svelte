@@ -4,10 +4,8 @@
 
   import Bar from './components/Bar.svelte';
   import Lead from './components/Lead.svelte';
-  import Institutions from './components/Institutions.svelte';
   import Cases from './components/Cases.svelte';
   import Experience from './components/Experience.svelte';
-  import Skills from './components/Skills.svelte';
   import Projects from './components/Projects.svelte';
   import Writing from './components/Writing.svelte';
   import Education from './components/Education.svelte';
@@ -21,10 +19,8 @@
   <Bar />
   <main>
     <Lead />
-    <Institutions />
     <Cases />
     <Experience />
-    <Skills />
     <Projects />
     <Writing />
     <Education />
